@@ -22,9 +22,9 @@ $(window).on("load", function() {
         storyEl.scrollLeft(pos);
     });
 
-    $('#scroll-zoom-rissani').scroll(function() {
-        scaleOnScroll($('#rissani-door-img'));
-    });
+    // $("#rissani-door").scroll(function() {
+    //     scaleOnScroll($('#rissani-door-img'));
+    // });
 
 });
 

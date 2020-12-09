@@ -1,7 +1,7 @@
 // Taille d'écran de référence : 1920x1080
 
 $(window).on("load", function() {
-    var backgroundEl = $("#background");
+    var backgroundEl = $("#story-background");
     var scrollerEl = $("#scroller");
     var storyEl = $("#story");
 

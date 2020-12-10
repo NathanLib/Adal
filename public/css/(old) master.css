@@ -1,0 +1,112 @@
+/* ----------
+-- STYLES POUR LE BODY --
+---------- */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh;
+    scrollbar-width: none;
+    overscroll-behavior: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* ----------
+-- STYLES POUR LES TEXTES --
+---------- */
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+#metrics {
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    left: 0;
+}
+
+
+/* ----------
+-- STYLES POUR LE SPLASHSCREEN --
+---------- */
+
+#splash-screen {
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100vh;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+}
+
+#splash-screen button {
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    background: white;
+}
+
+
+/* ----------
+-- STYLES POUR LA PORTE DE RISSANI / ÉTAPE 1 --
+---------- */
+
+#rissani-door {
+    /* position: fixed; */
+    z-index: 90;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3000px;
+}
+
+#rissani-door-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* ----------
+-- STYLES POUR LA STORY --
+---------- */
+
+#story {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    scrollbar-width: none;
+    overscroll-behavior: none;
+}
+
+#story::-webkit-scrollbar {
+    display: none;
+}
+
+#story-background {
+    height: 100%;
+}
+
+
+/* ----------
+-- STYLES POUR LE SCROLLER --
+---------- */
+
+#scroller {
+    height: 4843px;
+}

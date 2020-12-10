@@ -64,6 +64,7 @@
     {
         "type": "audio",
         "name": "scene1plan2-audio",
+        "source": "public/sounds/childs-laugh.mp3",
         "start": 100,
         "end": 700,
         "states": [

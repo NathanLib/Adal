@@ -7,6 +7,10 @@ $(window).on("load", function () {
 
     displayMetrics();
 
+    $("#launch-audio").click(function () {
+        playAudio(scrit_audio, "audio_menu");
+    });
+
     $(window).scroll(function () {
         scrollTop = $("body,html").scrollTop();
         delta = scrollTop / totalHeight;
@@ -14,12 +18,25 @@ $(window).on("load", function () {
         posS = delta * timeMax;
 
         render(posS);
+        // audioManager(posS);
 
-        // Display metrics
+        // Display dynamic metrics
         $("#scroll-position").text("Scroll position : " + $("body,html").scrollTop());
         $("#posS").text("PosS : " + posS.toFixed(3));
     });
 });
+
+$(window).on("beforeunload", function () {
+    $(window).scrollTop(0);
+});
+
+function findWithName(array, value) {
+    return array.findIndex(item => item.name === value);
+}
+
+function playAudio(array, name) {
+    audios[findWithName(array, name)].object.play();
+}
 
 function displayMetrics() {
     $("#window-width").text("Window width : " + $(window).innerWidth());
@@ -53,28 +70,6 @@ function applyProperties(name, properties) {
         .css("opacity", properties.opacity)
         .css("transform", "scale(" + properties.scale + ", " + properties.scale + ") translateX(" + posX + "px)");
 }
-
-// function scale(name, value) {
-//     $("#" + name).css("transform", "scale(" + value + ", " + value + ")");
-// }
-
-// function opacity(name, value) {
-//     $("#" + name).css("opacity", value);
-// }
-
-// function horizontalTranslate(name, value) {
-//     var imgWidth = $("#" + name).width();
-//     var screenWidth = $(window).innerWidth();
-//     var offset = imgWidth - screenWidth;
-
-//     console.log("Offset :" + offset);
-//     var posX = -value * offset;
-
-//     console.log(posX);
-
-//     $("#" + name).css("transform", "translateX(" + posX + "px)");
-// }
-
 // Créer une fonction ease-in pour l'opacité
 function render(posS) {
     for (let i = 0; i < script.length; i++) {
@@ -128,6 +123,21 @@ function render(posS) {
     }
 }
 
+function audioManager(posS) {
+    for (let i = 0; i < audios.length; i++) {
+        const audio = script_audio[i];
+
+        var src = new Audio(audio.source);
+        src.loop = true;
+
+        if (posS >= audio.start && posS <= audio.end && src.paused) {
+            src.play();
+        } else {
+            src.pause();
+        }
+    }
+}
+
 const script = [
     {
         type: "plan",
@@ -176,18 +186,32 @@ const script = [
                 endValue: 1,
                 start: 30,
                 end: 60
-            },
-            {
-                type: "opacity",
-                startValue: 1,
-                endValue: 0.1,
-                start: 40,
-                end: 60
             }
         ],
         defaultProperties: {
             scale: 1,
             opacity: 0.5,
+            translateX: 0
+        }
+    },
+
+    {
+        type: "persos",
+        name: "scene1plan2-persos",
+        start: 0,
+        end: 60,
+        states: [
+            {
+                type: "translateX",
+                startValue: 0,
+                endValue: 0.5,
+                start: 30,
+                end: 60
+            }
+        ],
+        defaultProperties: {
+            scale: 1,
+            opacity: 1,
             translateX: 0
         }
     }
@@ -207,21 +231,38 @@ const script = [
     //         }
     //     ]
     // },
+];
 
-    // {
-    //     type: "audio",
-    //     name: "scene1plan2-audio",
-    //     source: "public/sounds/childs-laugh.mp3",
-    //     start: 100,
-    //     end: 700,
-    //     states: [
-    //         {
-    //             type: "volume-fadeIn",
-    //             startValue: 0,
-    //             endValue: 1,
-    //             start: 100,
-    //             end: 350
-    //         }
-    //     ]
-    // }
+// const script_audio = [
+//     {
+//         type: "audio",
+//         name: "scene1plan2-audio",
+//         source: "public/sounds/childs-laugh.mp3",
+//         start: 30,
+//         end: 60,
+//         states: [
+//             // {
+//             //     type: "volume-fadeIn",
+//             //     startValue: 0,
+//             //     endValue: 1,
+//             //     start: 100,
+//             //     end: 350
+//             // }
+//         ]
+//     }
+// ];
+
+const scrit_audio = [
+    {
+        name: "audio_menu",
+        object: new Audio("public/sounds/safari-loop.wav", { loop: true })
+    },
+    {
+        name: "audio_scene1plan2_child",
+        object: new Audio("public/sounds/childs-laugh.mp3", { loop: true })
+    },
+    {
+        name: "audio_scene1plan2_camel",
+        object: new Audio("public/sounds/camel-ride-india.wav", { loop: true })
+    }
 ];

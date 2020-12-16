@@ -52,7 +52,7 @@ p {
 ---------- */
 
 #scene1plan1 {
-    z-index: 1;
+    z-index: 2;
     position: absolute;
     top: 0;
     left: 0;
@@ -68,5 +68,15 @@ p {
     left: 0;
     height: 100%;
     width: auto;
+    transform: scaleY(0.5, 0.5);
     opacity: 0.5;
+}
+
+#scene1plan2-persos {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: auto;
 }

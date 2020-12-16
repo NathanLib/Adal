@@ -6,9 +6,11 @@ $(window).on("load", function () {
     var timeMax = 360; // = 6 minutes
 
     displayMetrics();
+    applyLoopAudio();
 
     $("#launch-audio").click(function () {
-        playAudio(scrit_audio, "audio_menu");
+        var audio_menu = new Audio("public/sounds/safari-loop.wav", { loop: true });
+        audio_menu.play();
     });
 
     $(window).scroll(function () {
@@ -30,18 +32,18 @@ $(window).on("beforeunload", function () {
     $(window).scrollTop(0);
 });
 
-function findWithName(array, value) {
-    return array.findIndex(item => item.name === value);
-}
-
-function playAudio(array, name) {
-    audios[findWithName(array, name)].object.play();
-}
-
 function displayMetrics() {
     $("#window-width").text("Window width : " + $(window).innerWidth());
     $("#window-height").text("Window height : " + $(window).innerHeight());
     $("#scroller-width").text("Scroller width : " + $("#scroller").height());
+}
+
+function applyLoopAudio() {
+    script.forEach(element => {
+        element.audios.forEach(audio => {
+            audio.loop ? (audio.object.loop = true) : (audio.object.loop = false);
+        });
+    });
 }
 
 function calculateRatio(posS, startValue, endValue, start, end) {
@@ -117,23 +119,20 @@ function render(posS) {
             }
 
             applyProperties(scene.name, properties);
+
+            if (scene.audios.length > 0) {
+                for (let k = 0; k < scene.audios.length; k++) {
+                    const audio = scene.audios[k];
+
+                    if (posS >= audio.start && posS <= audio.end) {
+                        audio.object.play();
+                    } else {
+                        audio.object.pause(); // problème sur le stop
+                    }
+                }
+            }
         } else {
             $("#" + scene.name).hide();
-        }
-    }
-}
-
-function audioManager(posS) {
-    for (let i = 0; i < audios.length; i++) {
-        const audio = script_audio[i];
-
-        var src = new Audio(audio.source);
-        src.loop = true;
-
-        if (posS >= audio.start && posS <= audio.end && src.paused) {
-            src.play();
-        } else {
-            src.pause();
         }
     }
 }
@@ -164,7 +163,8 @@ const script = [
             scale: 1,
             opacity: 1,
             translateX: 0
-        }
+        },
+        audios: []
     },
 
     {
@@ -192,7 +192,24 @@ const script = [
             scale: 1,
             opacity: 0.5,
             translateX: 0
-        }
+        },
+        audios: [
+            {
+                name: "childs-laugh",
+                object: new Audio("public/sounds/childs-laugh.mp3"),
+                loop: true,
+                start: 30,
+                end: 60
+            },
+
+            {
+                name: "camel-ride-india",
+                object: new Audio("public/sounds/camel-ride-india.wav"),
+                loop: true,
+                start: 45,
+                end: 60
+            }
+        ]
     },
 
     {
@@ -213,56 +230,7 @@ const script = [
             scale: 1,
             opacity: 1,
             translateX: 0
-        }
-    }
-
-    // {
-    //     type: "plan",
-    //     name: "scene1plan2",
-    //     start: 700,
-    //     end: 1000,
-    //     states: [
-    //         {
-    //             type: "paused",
-    //             startValue: 0,
-    //             endValue: 1,
-    //             start: 700,
-    //             end: 1000
-    //         }
-    //     ]
-    // },
-];
-
-// const script_audio = [
-//     {
-//         type: "audio",
-//         name: "scene1plan2-audio",
-//         source: "public/sounds/childs-laugh.mp3",
-//         start: 30,
-//         end: 60,
-//         states: [
-//             // {
-//             //     type: "volume-fadeIn",
-//             //     startValue: 0,
-//             //     endValue: 1,
-//             //     start: 100,
-//             //     end: 350
-//             // }
-//         ]
-//     }
-// ];
-
-const scrit_audio = [
-    {
-        name: "audio_menu",
-        object: new Audio("public/sounds/safari-loop.wav", { loop: true })
-    },
-    {
-        name: "audio_scene1plan2_child",
-        object: new Audio("public/sounds/childs-laugh.mp3", { loop: true })
-    },
-    {
-        name: "audio_scene1plan2_camel",
-        object: new Audio("public/sounds/camel-ride-india.wav", { loop: true })
+        },
+        audios: []
     }
 ];

@@ -6,7 +6,7 @@ $(window).on("load", function () {
     var timeMax = 360; // = 6 minutes
 
     displayMetrics();
-    applyLoopAudio();
+    applyLoopAudios();
 
     $("#launch-audio").click(function () {
         var audio_menu = new Audio("public/sounds/safari-loop.wav", { loop: true });
@@ -38,7 +38,7 @@ function displayMetrics() {
     $("#scroller-width").text("Scroller width : " + $("#scroller").height());
 }
 
-function applyLoopAudio() {
+function applyLoopAudios() {
     script.forEach(element => {
         element.audios.forEach(audio => {
             audio.loop ? (audio.object.loop = true) : (audio.object.loop = false);

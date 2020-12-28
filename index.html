@@ -6,13 +6,15 @@
         <title>L'histoire d'Adal</title>
 
         <link rel="stylesheet" href="public/css/master.css" />
-        <link rel="stylesheet" href="public/css/class-js.css" />
     </head>
 
-    <body>
-        <!-- <div id="splash-screen">
-            <button id="splash-screen-btn">Commencer l'expérience</button>
-         </div> -->
+    <body class="no-scroll">
+        <div id="homescreen">
+            <img id="homescreen_img" src="public/img/homescreen.svg" alt="homescreen" />
+            <div id="homescreen_btn_wrapper">
+                <button id="homescreen_btn">Commencer l'histoire</button>
+            </div>
+        </div>
 
         <div id="scroller"></div>
 
@@ -33,6 +35,16 @@
             <p id="posS">PosS : 0</p>
 
             <button id="launch-audio">Activer la musique</button>
+        </div>
+
+        <div id="controls">
+            <div id="auto-play">
+                <img src="public/img/play.svg" alt="auto-play button" />
+            </div>
+            <div id="sounds">
+                <img id="sound-off" class="" src="public/img/sound-off.svg" alt="sound off control button" />
+                <img id="sound-on" class="d-none" src="public/img/sound-on.svg" alt="sound on control button" />
+            </div>
         </div>
 
         <script

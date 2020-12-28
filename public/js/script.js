@@ -1,3 +1,6 @@
+// Initialisation des variables globales
+var isAudioAllowed = false;
+
 $(window).on("load", function () {
     // Initialisation des variables
     var totalHeight = $("#scroller").height();
@@ -11,6 +14,22 @@ $(window).on("load", function () {
     $("#launch-audio").click(function () {
         var audio_menu = new Audio("public/sounds/safari-loop.wav", { loop: true });
         audio_menu.play();
+
+        setTimeout(() => {
+            audio_menu.pause();
+        }, 2000);
+    });
+
+    $("#homescreen_btn_wrapper").click(function () {
+        launchGame();
+    });
+
+    $("#sounds").click(function () {
+        toggleSound();
+    });
+
+    $("auto-play").click(function () {
+        autoPlay();
     });
 
     $(window).scroll(function () {
@@ -20,7 +39,6 @@ $(window).on("load", function () {
         posS = delta * timeMax;
 
         render(posS);
-        // audioManager(posS);
 
         // Display dynamic metrics
         $("#scroll-position").text("Scroll position : " + $("body,html").scrollTop());
@@ -36,6 +54,36 @@ function displayMetrics() {
     $("#window-width").text("Window width : " + $(window).innerWidth());
     $("#window-height").text("Window height : " + $(window).innerHeight());
     $("#scroller-width").text("Scroller width : " + $("#scroller").height());
+}
+
+function launchGame() {
+    $("body").toggleClass("no-scroll");
+    $("#homescreen").fadeOut("slow");
+
+    //Autorise le son si ce n'est pas déjà fait
+    !isAudioAllowed ? toggleSound() : (isAudioAllowed = false);
+}
+
+function toggleSound() {
+    // Change le statut du booléen qui gère le son
+    if ($("#sounds #sound-off").hasClass("d-none")) {
+        isAudioAllowed = false;
+
+        for (let i = 0; i < script.length; i++) {
+            const scene = script[i];
+
+            for (let j = 0; j < scene.audios.length; j++) {
+                const audio = scene.audios[j];
+                audio.object.pause();
+            }
+        }
+    } else {
+        isAudioAllowed = true;
+    }
+
+    // Change l'icon du bouton
+    $("#sounds #sound-off").toggleClass("d-none");
+    $("#sounds #sound-on").toggleClass("d-none");
 }
 
 function applyLoopAudios() {
@@ -72,7 +120,9 @@ function applyProperties(name, properties) {
         .css("opacity", properties.opacity)
         .css("transform", "scale(" + properties.scale + ", " + properties.scale + ") translateX(" + posX + "px)");
 }
-// Créer une fonction ease-in pour l'opacité
+
+// Créer une fonction ease-in pour le render
+
 function render(posS) {
     for (let i = 0; i < script.length; i++) {
         const scene = script[i];
@@ -86,56 +136,58 @@ function render(posS) {
                 translateX: scene.defaultProperties.translateX
             };
 
-            if (scene.states.length > 0) {
-                for (let j = 0; j < scene.states.length; j++) {
-                    const state = scene.states[j];
+            for (let j = 0; j < scene.states.length; j++) {
+                const state = scene.states[j];
 
-                    switch (state.type) {
-                        case "scale":
-                            var ratio = calculateRatio(posS, state.startValue, state.endValue, state.start, state.end);
-                            if (ratio != null) {
-                                properties.scale = ratio;
-                            }
-                            break;
+                switch (state.type) {
+                    case "scale":
+                        var ratio = calculateRatio(posS, state.startValue, state.endValue, state.start, state.end);
+                        if (ratio != null) {
+                            properties.scale = ratio;
+                        }
+                        break;
 
-                        case "opacity":
-                            var ratio = calculateRatio(posS, state.startValue, state.endValue, state.start, state.end);
-                            if (ratio != null) {
-                                properties.opacity = ratio;
-                            }
-                            break;
+                    case "opacity":
+                        var ratio = calculateRatio(posS, state.startValue, state.endValue, state.start, state.end);
+                        if (ratio != null) {
+                            properties.opacity = ratio;
+                        }
+                        break;
 
-                        case "translateX":
-                            var ratio = calculateRatio(posS, state.startValue, state.endValue, state.start, state.end);
-                            if (ratio != null) {
-                                properties.translateX = ratio;
-                            }
-                            break;
+                    case "translateX":
+                        var ratio = calculateRatio(posS, state.startValue, state.endValue, state.start, state.end);
+                        if (ratio != null) {
+                            properties.translateX = ratio;
+                        }
+                        break;
 
-                        default:
-                            break;
-                    }
+                    default:
+                        break;
                 }
             }
 
             applyProperties(scene.name, properties);
-
-            if (scene.audios.length > 0) {
-                for (let k = 0; k < scene.audios.length; k++) {
-                    const audio = scene.audios[k];
-
-                    if (posS >= audio.start && posS <= audio.end) {
-                        audio.object.play();
-                    } else {
-                        audio.object.pause(); // problème sur le stop
-                    }
-                }
-            }
         } else {
             $("#" + scene.name).hide();
         }
+
+        for (let k = 0; k < scene.audios.length; k++) {
+            const audio = scene.audios[k];
+
+            if (posS >= audio.start && posS <= audio.end && isAudioAllowed) {
+                if (audio.object.paused) {
+                    audio.object.play();
+                }
+            } else {
+                if (!audio.object.paused) {
+                    audio.object.pause();
+                }
+            }
+        }
     }
 }
+
+function soundManager(scene) {}
 
 const script = [
     {

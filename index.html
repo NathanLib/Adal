@@ -14,8 +14,12 @@
             <div id="homescreen_btn_wrapper">
                 <button id="homescreen_btn">Commencer l'histoire</button>
             </div>
+            <div id="homescreen_reminder">
+                <p>N'oubliez pas d'activer le son avec le bouton en bas à droite de l'écran, pour profiter au mieux de l'expérience !</p>
+            </div>
         </div>
 
+        <!-- DEFINIR LA TAILLE DU SCROLLER DYNAMIQUEMENT EN JS -->
         <div id="scroller"></div>
 
         <div id="screen">
@@ -38,12 +42,13 @@
         </div>
 
         <div id="controls">
-            <div id="auto-play">
-                <img src="public/img/play.svg" alt="auto-play button" />
-            </div>
             <div id="sounds">
                 <img id="sound-off" class="" src="public/img/sound-off.svg" alt="sound off control button" />
                 <img id="sound-on" class="d-none" src="public/img/sound-on.svg" alt="sound on control button" />
+            </div>
+            <div id="auto-play">
+                <img id="auto-play-on" class="" src="public/img/play.svg" alt="auto-play button" />
+                <img id="auto-play-off" class="d-none" src="public/img/stop.svg" alt="auto-play button" />
             </div>
         </div>
 

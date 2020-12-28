@@ -1,5 +1,6 @@
 // Initialisation des variables globales
 var isAudioAllowed = false;
+var isAutoPlay = false;
 
 $(window).on("load", function () {
     // Initialisation des variables
@@ -7,6 +8,9 @@ $(window).on("load", function () {
     var delta = 0;
     var scrollTop = 0;
     var timeMax = 360; // = 6 minutes
+
+    //Cache le bouton auto-play tant qu'on est sur la homescreen
+    $("#auto-play").hide();
 
     displayMetrics();
     applyLoopAudios();
@@ -28,8 +32,27 @@ $(window).on("load", function () {
         toggleSound();
     });
 
-    $("auto-play").click(function () {
-        autoPlay();
+    // Chercher comment bloquer le scroll manuel tant qu'on est sur l'auto-play
+    $("#auto-play").click(function () {
+        isAutoPlay = !isAutoPlay;
+
+        // Change l'icon du bouton
+        $("#auto-play #auto-play-off").toggleClass("d-none");
+        $("#auto-play #auto-play-on").toggleClass("d-none");
+
+        if (isAutoPlay) {
+            var bottom = $("#scroller").height() - $(window).height();
+            var duration = getDuration(bottom);
+
+            $("html").animate(
+                {
+                    scrollTop: bottom
+                },
+                duration
+            );
+        } else {
+            $("html").stop();
+        }
     });
 
     $(window).scroll(function () {
@@ -62,6 +85,9 @@ function launchGame() {
 
     //Autorise le son si ce n'est pas déjà fait
     !isAudioAllowed ? toggleSound() : (isAudioAllowed = false);
+
+    //Fait appparaitre le bouton auto-play
+    $("#auto-play").show(1500);
 }
 
 function toggleSound() {
@@ -84,6 +110,14 @@ function toggleSound() {
     // Change l'icon du bouton
     $("#sounds #sound-off").toggleClass("d-none");
     $("#sounds #sound-on").toggleClass("d-none");
+}
+
+function getDuration(target) {
+    var currentTop = $(window).scrollTop(),
+        rate = 4,
+        distance;
+    distance = Math.abs(currentTop - target);
+    return distance * rate;
 }
 
 function applyLoopAudios() {

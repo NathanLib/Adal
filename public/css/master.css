@@ -1,6 +1,7 @@
 /* ----------
 -- STYLES GLOGAUX --
 ---------- */
+
 @font-face {
     font-family: "Open Sans";
     src: url("public/fonts/OpenSans-SemiBold.eot");
@@ -122,7 +123,7 @@ p {
     color: black;
 }
 
-#auto-play img {
+#auto-play img #auto-play-on {
     margin-left: 3px;
 }
 
@@ -152,9 +153,19 @@ p {
     object-fit: cover;
 }
 
+#homescreen_reminder {
+    position: absolute;
+    top: 90vh;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-family: "Open Sans";
+}
+
 #homescreen_btn_wrapper {
     position: absolute;
-    top: 75%;
+    top: 70vh;
     left: 50%;
     transform: translateX(-50%);
     border: 6px solid #ed7669;
@@ -181,7 +192,7 @@ p {
     display: inline-block;
     color: white;
     font-size: 1.25rem;
-    font-family: skia;
+    font-family: "Skia";
     font-weight: bold;
     line-height: 1;
     text-transform: uppercase;

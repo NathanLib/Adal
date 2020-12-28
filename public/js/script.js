@@ -187,8 +187,6 @@ function render(posS) {
     }
 }
 
-function soundManager(scene) {}
-
 const script = [
     {
         type: "plan",

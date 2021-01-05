@@ -1,13 +1,18 @@
 // Initialisation des variables globales
 var isAudioAllowed = false;
 var isAutoPlay = false;
+var isTextDisplayed = false;
+
+// setTimeout(() => {
+//     audio_menu.pause();
+// }, 2000);
 
 $(window).on("load", function () {
     // Initialisation des variables
     var totalHeight = $("#scroller").height();
     var delta = 0;
     var scrollTop = 0;
-    var timeMax = 360; // = 6 minutes
+    var timeMax = 360;
 
     //Cache le bouton auto-play tant qu'on est sur la homescreen
     $("#auto-play").hide();
@@ -15,43 +20,20 @@ $(window).on("load", function () {
     displayMetrics();
     applyLoopAudios();
 
-    $("#launch-audio").click(function () {
-        var audio_menu = new Audio("public/sounds/safari-loop.wav", { loop: true });
-        audio_menu.play();
-
-        setTimeout(() => {
-            audio_menu.pause();
-        }, 2000);
-    });
-
-    $("#homescreen_btn_wrapper").click(function () {
-        launchGame();
-    });
-
-    $("#sounds").click(function () {
-        toggleSound();
-    });
-
-    // Chercher comment bloquer le scroll manuel tant qu'on est sur l'auto-play
-    $("#auto-play").click(function () {
-        isAutoPlay = !isAutoPlay;
-
-        // Change l'icon du bouton
-        $("#auto-play #auto-play-off").toggleClass("d-none");
-        $("#auto-play #auto-play-on").toggleClass("d-none");
-
-        if (isAutoPlay) {
-            var bottom = $("#scroller").height() - $(window).height();
-            var duration = getDuration(bottom);
-
-            $("html").animate(
-                {
-                    scrollTop: bottom
-                },
-                duration
-            );
-        } else {
-            $("html").stop();
+    $(".control").click(function () {
+        switch ($(this).attr("id")) {
+            case "homescreen_btn_wrapper":
+                launchGame();
+                break;
+            case "sounds":
+                toggleSound();
+                break;
+            case "texts":
+                toggleText();
+                break;
+            case "auto-play":
+                activateAutoPlay();
+                break;
         }
     });
 
@@ -112,9 +94,42 @@ function toggleSound() {
     $("#sounds #sound-on").toggleClass("d-none");
 }
 
+function toggleText() {
+    // Change le statut du booléen qui gère l'affichage du texte
+    isTextDisplayed = !isTextDisplayed;
+
+    // Change l'icon du bouton
+    $("#texts #text-off, #texts #text-on").toggleClass("d-none");
+}
+
+function activateAutoPlay() {
+    isAutoPlay = !isAutoPlay;
+
+    // Change l'icon du bouton
+    $("#auto-play #auto-play-off").toggleClass("d-none");
+    $("#auto-play #auto-play-on").toggleClass("d-none");
+
+    // Bloque le scroll quand l'utilisateur est en mode auto-play
+    $("body").toggleClass("no-scroll");
+
+    if (isAutoPlay) {
+        var bottom = $("#scroller").height() - $(window).height();
+        var duration = getDuration(bottom);
+
+        $("html").animate(
+            {
+                scrollTop: bottom
+            },
+            duration
+        );
+    } else {
+        $("html").stop();
+    }
+}
+
 function getDuration(target) {
     var currentTop = $(window).scrollTop(),
-        rate = 4,
+        rate = 3.25,
         distance;
     distance = Math.abs(currentTop - target);
     return distance * rate;
@@ -218,6 +233,16 @@ function render(posS) {
                 }
             }
         }
+
+        for (let l = 0; l < scene.texts.length; l++) {
+            const text = scene.texts[l];
+
+            if (posS >= text.start && posS <= text.end && isTextDisplayed) {
+                $("#" + text.name).show();
+            } else {
+                $("#" + text.name).hide();
+            }
+        }
     }
 }
 
@@ -248,7 +273,8 @@ const script = [
             opacity: 1,
             translateX: 0
         },
-        audios: []
+        audios: [],
+        texts: []
     },
 
     {
@@ -293,7 +319,8 @@ const script = [
                 start: 45,
                 end: 60
             }
-        ]
+        ],
+        texts: [{ name: "scene1plan2-text", start: 40, end: 50 }]
     },
 
     {
@@ -315,6 +342,7 @@ const script = [
             opacity: 1,
             translateX: 0
         },
-        audios: []
+        audios: [],
+        texts: []
     }
 ];

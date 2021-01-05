@@ -117,6 +117,7 @@ p {
 }
 
 #sounds img,
+#texts img,
 #auto-play img {
     width: 1.5rem;
     height: 1.5rem;
@@ -155,7 +156,7 @@ p {
 
 #homescreen_reminder {
     position: absolute;
-    top: 90vh;
+    bottom: 2.5rem;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -168,7 +169,7 @@ p {
     top: 70vh;
     left: 50%;
     transform: translateX(-50%);
-    border: 6px solid #ed7669;
+    border: 6px solid #ffffff;
     transition: all 0.1s ease-in-out;
     cursor: pointer;
 }
@@ -177,26 +178,27 @@ p {
 }
 
 #homescreen_btn_wrapper:hover #homescreen_btn {
-    background: #ed7669;
+    background: #ffffff;
     padding: 1rem 2rem;
     margin: 0;
     outline: 0;
 }
 
 #homescreen_btn_wrapper:hover {
-    border: 12px solid #ed7669;
+    border: 12px solid #ffffff;
     outline: 0;
 }
 
 #homescreen_btn {
     display: inline-block;
-    color: white;
+    color: #cf977d;
+    color: linear-gradient(74deg, rgba(207, 151, 125, 1) 0%, rgba(154, 101, 73, 1) 100%);
     font-size: 1.25rem;
     font-family: "Skia";
     font-weight: bold;
     line-height: 1;
     text-transform: uppercase;
-    background: #ed7669;
+    background: #ffffff;
     padding: 1rem 2rem;
     margin: 6px;
     transition: all 0.1s ease-in-out;
@@ -206,10 +208,31 @@ p {
 }
 
 #homescreen_btn:hover {
-    background: #ed7669;
+    background: #ffffff;
     padding: 1rem 2rem;
     margin: 0;
     outline: 0;
+}
+
+/* ----------
+-- STYLES POUR LA ZONE DE TEXTE --
+---------- */
+
+.adal-text {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-family: "Open Sans";
+
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 1rem 2rem;
+    border: 4px solid white;
+    z-index: 10;
+    max-width: calc(100vw - 14rem);
+    display: none;
 }
 
 /* ----------

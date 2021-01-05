@@ -11,11 +11,15 @@
     <body class="no-scroll">
         <div id="homescreen">
             <img id="homescreen_img" src="public/img/homescreen.svg" alt="homescreen" />
-            <div id="homescreen_btn_wrapper">
+            <div class="control" id="homescreen_btn_wrapper">
                 <button id="homescreen_btn">Commencer l'histoire</button>
             </div>
             <div id="homescreen_reminder">
-                <p>N'oubliez pas d'activer le son avec le bouton en bas à droite de l'écran, pour profiter au mieux de l'expérience !</p>
+                <p>
+                    N'oubliez pas d'activer le son et les sous-titres avec les bouton en bas à droite de l'écran, pour profiter au mieux de
+                    l'expérience !
+                </p>
+                <p>Vous pourrez les désactiver à tout moment par la suite.</p>
             </div>
         </div>
 
@@ -23,10 +27,18 @@
         <div id="scroller"></div>
 
         <div id="screen">
+            <!-- Scène 1 Plan 1 -->
             <img id="scene1plan1" src="public/img/scene1plan1.svg" alt="scene 1 plan 1" />
 
+            <!-- Scène 1 Plan 2 -->
             <img id="scene1plan2" src="public/img/scene1plan2.svg" alt="scene 1 plan 2" />
             <img id="scene1plan2-persos" src="public/img/scene1plan2-persos.svg" alt="scene 1 plan 2 persos" />
+            <div id="scene1plan2-text" class="adal-text">
+                <p>
+                    J'me présente, je m'apelle Henri, j'voudrais bien réussir ma vie, être aiméééééé, être beau gagner de l'argent, puis
+                    surtout être intelligent et pour tout ça il faudrait que j'bosse a plein temps
+                </p>
+            </div>
 
             <!-- <img id="scene1plan4" src="public/img/scene1plan4.svg" alt="scene 1 plan 4" /> -->
         </div>
@@ -37,16 +49,18 @@
             <p id="scroller-width">Scroller height : 0</p>
             <p id="scroll-position">Scroll position : 0</p>
             <p id="posS">PosS : 0</p>
-
-            <button id="launch-audio">Activer la musique</button>
         </div>
 
         <div id="controls">
-            <div id="sounds">
+            <div class="control" id="sounds">
                 <img id="sound-off" class="" src="public/img/sound-off.svg" alt="sound off control button" />
                 <img id="sound-on" class="d-none" src="public/img/sound-on.svg" alt="sound on control button" />
             </div>
-            <div id="auto-play">
+            <div class="control" id="texts">
+                <img id="text-on" class="d-none" src="public/img/text.svg" alt="text on button" />
+                <img id="text-off" class="" src="public/img/no-text.svg" alt="no-text button" />
+            </div>
+            <div class="control" id="auto-play">
                 <img id="auto-play-on" class="" src="public/img/play.svg" alt="auto-play button" />
                 <img id="auto-play-off" class="d-none" src="public/img/stop.svg" alt="auto-play button" />
             </div>

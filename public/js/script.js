@@ -265,6 +265,29 @@ function render(posS) {
 
 const script = [
     {
+        type: "help",
+        name: "start-help",
+        start: 0,
+        end: 0.5,
+        states: [
+            {
+                type: "opacity",
+                startValue: 1,
+                endValue: 0,
+                start: 0,
+                end: 0.5
+            }
+        ],
+        defaultProperties: {
+            scale: 1,
+            opacity: 1,
+            translateX: 0
+        },
+        audios: [],
+        texts: []
+    },
+
+    {
         type: "plan",
         name: "scene1plan1",
         start: 0,
@@ -311,7 +334,7 @@ const script = [
                 type: "translateX",
                 startValue: 0,
                 endValue: 1,
-                start: 30,
+                start: 22,
                 end: 60
             }
         ],
@@ -325,7 +348,7 @@ const script = [
                 name: "childs-laugh",
                 object: new Audio("public/sounds/childs-laugh.mp3"),
                 loop: true,
-                start: 30,
+                start: 22,
                 end: 60
             },
 
@@ -350,7 +373,7 @@ const script = [
                 type: "translateX",
                 startValue: 0,
                 endValue: 0.5,
-                start: 30,
+                start: 22,
                 end: 60
             }
         ],

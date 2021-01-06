@@ -334,7 +334,113 @@ p {
 }
 
 /* ----------
--- STYLES POUR LA ZONE DE TEXTE --
+-- STYLES POUR LA PAGE D'AIDE --
+---------- */
+
+#start-help {
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: -moz-linear-gradient(
+        top,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 65%,
+        rgba(255, 255, 255, 0.35) 100%
+    ); /* FF3.6-15 */
+    background: -webkit-linear-gradient(
+        top,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 65%,
+        rgba(255, 255, 255, 0.35) 100%
+    ); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 65%,
+        rgba(255, 255, 255, 0.35) 100%
+    ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+#start-help > div {
+    position: absolute;
+    bottom: 3.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#start-help span {
+    width: 30px;
+    height: 50px;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+
+#start-help span::before {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    content: "";
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    background-color: #fff;
+    border-radius: 100%;
+    -webkit-animation: mouse-animation 2s infinite;
+    animation: mouse-animation 2s infinite;
+    box-sizing: border-box;
+}
+
+#start-help p {
+    color: white;
+    font-family: "Skia";
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+@-webkit-keyframes mouse-animation {
+    0% {
+        -webkit-transform: translate(0, 0);
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    80% {
+        -webkit-transform: translate(0, 20px);
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes mouse-animation {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    80% {
+        transform: translate(0, 20px);
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ----------
+-- STYLES POUR LES ZONES DE TEXTE --
 ---------- */
 
 .adal-text {

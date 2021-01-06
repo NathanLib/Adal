@@ -31,6 +31,11 @@ body {
     padding: 0;
     box-sizing: border-box;
     overscroll-behavior: none;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 /* ----------
@@ -59,6 +64,74 @@ p {
 
 .d-none {
     display: none;
+}
+
+/* ----------
+-- STYLES POUR LE LOADER --
+---------- */
+
+.flex-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #996549;
+    z-index: 999;
+}
+
+.loader-text {
+    color: white;
+    font-family: "Open Sans";
+    font-size: 1.3rem;
+    margin-bottom: 4rem;
+}
+
+.dots .dot {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin: 0 7px 0 7px;
+    border-radius: 50%;
+    background: #fff;
+    -webkit-animation: dot-dot-dot 1.4s linear infinite;
+    animation: dot-dot-dot 1.4s linear infinite;
+}
+
+.dots .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dots .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes dot-dot-dot {
+    0%,
+    60%,
+    100% {
+        -webkit-transform: initial;
+        -ms-transform: initial;
+        transform: initial;
+    }
+    30% {
+        -webkit-transform: translateY(-25px);
+        -ms-transform: translateY(-25px);
+        transform: translateY(-25px);
+    }
 }
 
 /* ----------
@@ -100,20 +173,23 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0.75rem;
+    margin: 1.25rem 0.75rem 0.75rem 0;
     border-radius: 50%;
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     background-color: rgba(250, 250, 250, 0.4);
     cursor: pointer;
+    animation: pulse 2s infinite;
 }
 
 #controls > div:hover {
     border: solid 0.125rem black;
+    animation: none;
 }
 
 #controls > div:active {
     box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.5);
+    animation: none;
 }
 
 #sounds img,
@@ -126,6 +202,32 @@ p {
 
 #auto-play img#auto-play-on {
     margin-left: 3px;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
 }
 
 /* ----------
@@ -141,6 +243,23 @@ p {
     bottom: 0;
     height: 100%;
     width: 100%;
+}
+
+#homescreen_title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-family: "Skia";
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+#homescreen_subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
 }
 
 #homescreen_img {

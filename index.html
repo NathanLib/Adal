@@ -9,8 +9,26 @@
     </head>
 
     <body class="no-scroll">
+        <div class="preloader js-preloader flex-center">
+            <div class="loader-text">
+                <p>Merci de patienter pendant le chargement de l'histoire</p>
+            </div>
+            <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
         <div id="homescreen">
-            <img id="homescreen_img" src="public/img/homescreen.svg" alt="homescreen" />
+            <img id="homescreen_img" src="public/img/homescreen.png" alt="homescreen" />
+            <div id="homescreen_title">
+                <p>
+                    L'histoire d'Adal
+                    <br />
+                    <span id="homescreen_subtitle">Un jeune et courageux enfant touareg</span>
+                </p>
+            </div>
             <div class="control" id="homescreen_btn_wrapper">
                 <button id="homescreen_btn">Commencer l'histoire</button>
             </div>
@@ -71,6 +89,14 @@
             integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=="
             crossorigin="anonymous"
         ></script>
+        <script src="public/js/jquery.preloadinator.min.js"></script>
+        <script>
+            $(".js-preloader").preloadinator({
+                animation: "fadeOut",
+                animationDuration: 400,
+                minTime: 1500
+            });
+        </script>
         <script src="public/js/script.js" charset="utf-8"></script>
     </body>
 </html>

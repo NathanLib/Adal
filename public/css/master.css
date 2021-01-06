@@ -124,7 +124,7 @@ p {
     color: black;
 }
 
-#auto-play img #auto-play-on {
+#auto-play img#auto-play-on {
     margin-left: 3px;
 }
 

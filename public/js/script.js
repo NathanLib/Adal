@@ -3,10 +3,6 @@ var isAudioAllowed = false;
 var isAutoPlay = false;
 var isTextDisplayed = false;
 
-// setTimeout(() => {
-//     audio_menu.pause();
-// }, 2000);
-
 $(window).on("load", function () {
     // Initialisation des variables
     var totalHeight = $("#scroller").height();
@@ -76,38 +72,58 @@ function toggleSound() {
     // Change le statut du booléen qui gère le son
     if ($("#sounds #sound-off").hasClass("d-none")) {
         isAudioAllowed = false;
-
-        for (let i = 0; i < script.length; i++) {
-            const scene = script[i];
-
-            for (let j = 0; j < scene.audios.length; j++) {
-                const audio = scene.audios[j];
-                audio.object.pause();
-            }
-        }
     } else {
         isAudioAllowed = true;
     }
 
+    // Parcours tous les sons pour jouer ou stopper directement au clic du bouton
+    fetchSounds();
+
     // Change l'icon du bouton
-    $("#sounds #sound-off").toggleClass("d-none");
-    $("#sounds #sound-on").toggleClass("d-none");
+    $("#sounds #sound-on, #sounds #sound-off").toggleClass("d-none");
+}
+
+function fetchSounds() {
+    script.forEach(scene => {
+        scene.audios.forEach(audio => {
+            if (posS >= audio.start && posS <= audio.end && isAudioAllowed) {
+                if (audio.object.paused) {
+                    audio.object.play();
+                }
+            } else {
+                if (!audio.object.paused) {
+                    audio.object.pause();
+                }
+            }
+        });
+    });
 }
 
 function toggleText() {
     // Change le statut du booléen qui gère l'affichage du texte
     isTextDisplayed = !isTextDisplayed;
 
+    // Parcours tous les textes pour afficher ou enlever directement l'affichage au clic du bouton
+    fetchTexts();
+
     // Change l'icon du bouton
     $("#texts #text-off, #texts #text-on").toggleClass("d-none");
 }
 
+function fetchTexts() {
+    script.forEach(scene => {
+        scene.texts.forEach(text => {
+            if (posS >= text.start && posS <= text.end && isTextDisplayed) {
+                $("#" + text.name).show();
+            } else {
+                $("#" + text.name).hide();
+            }
+        });
+    });
+}
+
 function activateAutoPlay() {
     isAutoPlay = !isAutoPlay;
-
-    // Change l'icon du bouton
-    $("#auto-play #auto-play-off").toggleClass("d-none");
-    $("#auto-play #auto-play-on").toggleClass("d-none");
 
     // Bloque le scroll quand l'utilisateur est en mode auto-play
     $("body").toggleClass("no-scroll");
@@ -125,6 +141,9 @@ function activateAutoPlay() {
     } else {
         $("html").stop();
     }
+
+    // Change l'icon du bouton
+    $("#auto-play #auto-play-on, #auto-play #auto-play-off").toggleClass("d-none");
 }
 
 function getDuration(target) {
@@ -169,8 +188,6 @@ function applyProperties(name, properties) {
         .css("opacity", properties.opacity)
         .css("transform", "scale(" + properties.scale + ", " + properties.scale + ") translateX(" + posX + "px)");
 }
-
-// Créer une fonction ease-in pour le render
 
 function render(posS) {
     for (let i = 0; i < script.length; i++) {
@@ -346,3 +363,10 @@ const script = [
         texts: []
     }
 ];
+
+// Créer une fonction ease-in pour le render
+
+// Je le garde ici pour me rappeler comment faire un timer :)
+// setTimeout(() => {
+//     audio_menu.pause();
+// }, 2000);

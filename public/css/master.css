@@ -179,17 +179,17 @@ p {
     backdrop-filter: blur(5px);
     background-color: rgba(250, 250, 250, 0.4);
     cursor: pointer;
-    animation: pulse 2s infinite;
+    /* animation: pulse 2s infinite; */
 }
 
 #controls > div:hover {
     border: solid 0.125rem black;
-    animation: none;
+    /* animation: none; */
 }
 
 #controls > div:active {
     box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.5);
-    animation: none;
+    /* animation: none; */
 }
 
 #sounds img,
@@ -202,6 +202,15 @@ p {
 
 #auto-play img#auto-play-on {
     margin-left: 3px;
+}
+
+.pulse {
+    animation: pulse 2s;
+}
+
+.pulse:hover,
+.pulse:active {
+    animation: none;
 }
 
 @-webkit-keyframes pulse {

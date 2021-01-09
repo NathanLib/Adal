@@ -15,8 +15,9 @@ $(window).on("load", function () {
 
     displayMetrics();
     applyLoopAudios();
+    syncControlsBtnAnimations();
 
-    $(".control").click(function () {
+    $(".start, .control").click(function () {
         switch ($(this).attr("id")) {
             case "homescreen_btn_wrapper":
                 launchGame();
@@ -261,6 +262,12 @@ function render(posS) {
             }
         }
     }
+}
+
+function syncControlsBtnAnimations() {
+    setInterval(function () {
+        $(".control").toggleClass("pulse");
+    }, 1500);
 }
 
 const script = [

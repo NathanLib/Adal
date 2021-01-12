@@ -17,7 +17,7 @@ $(window).on("load", function () {
     applyLoopAudios();
     syncControlsBtnAnimations();
 
-    $(".start, .control").click(function () {
+    $(".start, .control, .close-source").click(function () {
         switch ($(this).attr("id")) {
             case "homescreen_btn_wrapper":
                 launchGame();
@@ -29,7 +29,13 @@ $(window).on("load", function () {
                 toggleText();
                 break;
             case "auto-play":
-                activateAutoPlay();
+                toggleAutoPlay();
+                break;
+            case "information":
+                toggleInformation();
+                break;
+            case "close-source":
+                toggleInformation();
                 break;
         }
     });
@@ -123,7 +129,7 @@ function fetchTexts() {
     });
 }
 
-function activateAutoPlay() {
+function toggleAutoPlay() {
     isAutoPlay = !isAutoPlay;
 
     // Bloque le scroll quand l'utilisateur est en mode auto-play
@@ -188,6 +194,16 @@ function applyProperties(name, properties) {
     $("#" + name)
         .css("opacity", properties.opacity)
         .css("transform", "scale(" + properties.scale + ", " + properties.scale + ") translateX(" + posX + "px)");
+}
+
+function toggleInformation() {
+    $("#" + $("#information").data("source")).toggleClass("d-none");
+
+    //Cache les boutons de control car problème avec z-index avec position : fixed
+    $(".controls").toggleClass("d-none");
+
+    toggleAutoPlay();
+    toggleSound();
 }
 
 function render(posS) {
@@ -261,6 +277,18 @@ function render(posS) {
                 $("#" + text.name).hide();
             }
         }
+
+        for (let m = 0; m < scene.information.length; m++) {
+            const info = scene.information[m];
+
+            if (posS >= info.start && posS <= info.end) {
+                $("#information").data("source", info.name);
+                $("#information").css("display", "flex").show();
+            } else {
+                $("#information").data("source", "");
+                $("#information").hide();
+            }
+        }
     }
 }
 
@@ -291,7 +319,8 @@ const script = [
             translateX: 0
         },
         audios: [],
-        texts: []
+        texts: [],
+        information: {}
     },
 
     {
@@ -321,7 +350,8 @@ const script = [
             translateX: 0
         },
         audios: [],
-        texts: []
+        texts: [],
+        information: {}
     },
 
     {
@@ -367,7 +397,14 @@ const script = [
                 end: 60
             }
         ],
-        texts: [{ name: "scene1plan2-text", start: 40, end: 50 }]
+        texts: [{ name: "scene1plan2-text", start: 40, end: 50 }],
+        information: [
+            {
+                name: "scene1plan2-source",
+                start: 28,
+                end: 60
+            }
+        ]
     },
 
     {
@@ -390,7 +427,8 @@ const script = [
             translateX: 0
         },
         audios: [],
-        texts: []
+        texts: [],
+        information: {}
     }
 ];
 

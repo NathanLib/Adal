@@ -15,9 +15,12 @@ $(window).on("load", function () {
 
     displayMetrics();
     applyLoopAudios();
-    syncControlsBtnAnimations();
+    // syncControlsBtnAnimations();
 
-    $(".start, .control, .close-source").click(function () {
+    // Réinitialise le scroll au refresh de la page
+    $(window).scrollTop(0);
+
+    $(".start, .control").click(function () {
         switch ($(this).attr("id")) {
             case "homescreen_btn_wrapper":
                 launchGame();
@@ -31,17 +34,17 @@ $(window).on("load", function () {
             case "auto-play":
                 toggleAutoPlay();
                 break;
-            case "information":
-                toggleInformation();
-                break;
-            case "close-source":
-                toggleInformation();
-                break;
+            // case "information":
+            //     toggleInformation();
+            //     break;
+            // case "close-source":
+            //     toggleInformation();
+            //     break;
         }
     });
 
     $(window).scroll(function () {
-        scrollTop = $("body,html").scrollTop();
+        scrollTop = $("html, body").scrollTop();
         delta = scrollTop / totalHeight;
 
         posS = delta * timeMax;
@@ -52,10 +55,6 @@ $(window).on("load", function () {
         $("#scroll-position").text("Scroll position : " + $("body,html").scrollTop());
         $("#posS").text("PosS : " + posS.toFixed(3));
     });
-});
-
-$(window).on("beforeunload", function () {
-    $(window).scrollTop(0);
 });
 
 function displayMetrics() {
@@ -129,6 +128,7 @@ function fetchTexts() {
     });
 }
 
+// Problème Auto-Play sur Chrome et Mozilla !!
 function toggleAutoPlay() {
     isAutoPlay = !isAutoPlay;
 
@@ -139,14 +139,14 @@ function toggleAutoPlay() {
         var bottom = $("#scroller").height() - $(window).height();
         var duration = getDuration(bottom);
 
-        $("html").animate(
+        $("html, body").animate(
             {
                 scrollTop: bottom
             },
             duration
         );
     } else {
-        $("html").stop();
+        $("html, body").stop();
     }
 
     // Change l'icon du bouton
@@ -155,11 +155,25 @@ function toggleAutoPlay() {
 
 function getDuration(target) {
     var currentTop = $(window).scrollTop(),
-        rate = 3.25,
+        rate = 3.15,
         distance;
     distance = Math.abs(currentTop - target);
     return distance * rate;
 }
+
+// function toggleInformation() {
+//     var source = $("#information").data("source");
+//     if (!source) {
+//         return;
+//     }
+//     $("#" + $("#information").data("source")).toggleClass("d-none");
+
+//     //Cache les boutons de control car problème avec z-index avec position : fixed
+//     $(".controls").toggleClass("d-none");
+
+//     // toggleAutoPlay();
+//     // toggleSound();
+// }
 
 function applyLoopAudios() {
     script.forEach(element => {
@@ -194,16 +208,6 @@ function applyProperties(name, properties) {
     $("#" + name)
         .css("opacity", properties.opacity)
         .css("transform", "scale(" + properties.scale + ", " + properties.scale + ") translateX(" + posX + "px)");
-}
-
-function toggleInformation() {
-    $("#" + $("#information").data("source")).toggleClass("d-none");
-
-    //Cache les boutons de control car problème avec z-index avec position : fixed
-    $(".controls").toggleClass("d-none");
-
-    toggleAutoPlay();
-    toggleSound();
 }
 
 function render(posS) {
@@ -283,20 +287,20 @@ function render(posS) {
 
             if (posS >= info.start && posS <= info.end) {
                 $("#information").data("source", info.name);
-                $("#information").css("display", "flex").show();
+                $("#information").removeClass("d-none");
             } else {
                 $("#information").data("source", "");
-                $("#information").hide();
+                $("#information").addClass("d-none");
             }
         }
     }
 }
 
-function syncControlsBtnAnimations() {
-    setInterval(function () {
-        $(".control").toggleClass("pulse");
-    }, 1500);
-}
+// function syncControlsBtnAnimations() {
+//     setInterval(function () {
+//         $(".control").toggleClass("pulse");
+//     }, 1500);
+// }
 
 const script = [
     {

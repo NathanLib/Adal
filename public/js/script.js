@@ -10,15 +10,18 @@ $(window).on("load", function () {
     var scrollTop = 0;
     var timeMax = 360;
 
-    //Cache le bouton auto-play tant qu'on est sur la homescreen
-    $("#auto-play").hide();
+    //Cache tous les boutons de contrôle tant qu'on est sur la homescreen
+    $(".controls").hide();
 
     displayMetrics();
     applyLoopAudios();
-    // syncControlsBtnAnimations();
+    //syncControlsBtnAnimations();
 
-    // Réinitialise le scroll au refresh de la page
-    $(window).scrollTop(0);
+    //Réinitialise le scroll au refresh de la page
+    //https://stackoverflow.com/questions/9316415/the-same-old-issue-scrolltop0-not-working-in-chrome-safari
+    window.setTimeout(function () {
+        $(window).scrollTop(0);
+    }, 0);
 
     $(".start, .control").click(function () {
         switch ($(this).attr("id")) {
@@ -70,8 +73,8 @@ function launchGame() {
     //Autorise le son si ce n'est pas déjà fait
     !isAudioAllowed ? toggleSound() : (isAudioAllowed = false);
 
-    //Fait appparaitre le bouton auto-play
-    $("#auto-play").show(1500);
+    //Fait appparaitre tous les boutons de control
+    $(".controls").show(1500);
 }
 
 function toggleSound() {

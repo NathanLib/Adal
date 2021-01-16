@@ -502,75 +502,69 @@ p {
 
 .source {
     z-index: 999;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    padding: 2.5rem;
+    padding: 3.25rem 2.5rem;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.9);
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
 }
 
-.source .work {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    justify-content: center;
-    max-height: 50vh;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
+.source-content {
+    max-width: 1200px;
 }
 
-.source .work img {
-    max-width: -webkit-fill-available;
+.source-content .work {
+    max-height: 50vh;
+}
+
+.source-content .work img {
+    max-width: 60%;
     max-height: -webkit-fill-available;
-    -o-object-fit: contain;
     object-fit: contain;
 }
 
-.source .info {
-    display: -webkit-box;
-    display: -ms-flexbox;
+.source-content .info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 2.5rem;
     color: white;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
+    padding-left: 2rem;
 }
 
-.source .info-details {
+.source-content .info-details {
     color: lightgray;
 }
 
-.source hr {
-    margin: 3rem;
+.source-content hr {
+    width: 25%;
+    margin: 3rem auto;
     color: white;
 }
 
-.source .biography {
+.source-content .biography {
     color: white;
 }
 
-.source .biography p {
+.source-content .biography p {
     color: lightgray;
 }
 
-.source .link {
+.source-content .link {
     margin: 1rem 0;
 }
 
-.close-source img {
-    position: absolute;
+.close-source {
+    position: fixed;
     top: 1rem;
     right: 1rem;
+}
+
+.close-source img {
     width: 48px;
     height: 48px;
     cursor: pointer;

@@ -23,7 +23,7 @@ $(window).on("load", function () {
         $(window).scrollTop(0);
     }, 0);
 
-    $(".start, .control").click(function () {
+    $(".start, .control, .close-source").click(function () {
         switch ($(this).attr("id")) {
             case "homescreen_btn_wrapper":
                 launchGame();
@@ -37,12 +37,12 @@ $(window).on("load", function () {
             case "auto-play":
                 toggleAutoPlay();
                 break;
-            // case "information":
-            //     toggleInformation();
-            //     break;
-            // case "close-source":
-            //     toggleInformation();
-            //     break;
+            case "information":
+                displaySource();
+                break;
+            case "close-source":
+                closeSource();
+                break;
         }
     });
 
@@ -131,7 +131,7 @@ function fetchTexts() {
     });
 }
 
-// Problème Auto-Play sur Chrome et Mozilla !!
+// Problème Auto-Play sur Chrome et Firefox !!
 function toggleAutoPlay() {
     isAutoPlay = !isAutoPlay;
 
@@ -158,25 +158,55 @@ function toggleAutoPlay() {
 
 function getDuration(target) {
     var currentTop = $(window).scrollTop(),
-        rate = 3.15,
+        rate = 3.25,
         distance;
     distance = Math.abs(currentTop - target);
     return distance * rate;
 }
 
-// function toggleInformation() {
-//     var source = $("#information").data("source");
-//     if (!source) {
-//         return;
-//     }
-//     $("#" + $("#information").data("source")).toggleClass("d-none");
+function displaySource() {
+    var source = $("#information").data("source");
 
-//     //Cache les boutons de control car problème avec z-index avec position : fixed
-//     $(".controls").toggleClass("d-none");
+    if (!source) {
+        return;
+    }
+    $("#" + source).removeClass("d-none");
 
-//     // toggleAutoPlay();
-//     // toggleSound();
-// }
+    // Coupe le son s'il était autorisé
+    // !! IL FAUDRAIT ESSAYSER DE TROUVER UNE SOLUTION POUR SE SOUVENIR DE CE PARAMETRE
+    // ET LE REACTIVER OU NON A LA FERMETURE DE LA PAGE EN FONCTION
+    if (isAudioAllowed) {
+        toggleSound();
+    }
+
+    // Cache les boutons de control car problème de z-index avec position : fixed
+    $(".controls").addClass("d-none");
+
+    // Bloque le scroll si la page source est ouverte
+    $("body").addClass("no-scroll");
+}
+
+function closeSource() {
+    var source = $("#information").data("source");
+
+    if (!source) {
+        return;
+    }
+    $("#" + source).addClass("d-none");
+
+    // Rétablie le son
+    // !! IL FAUDRAIT ESSAYSER DE TROUVER UNE SOLUTION POUR SE SOUVENIR DE CE PARAMETRE
+    // ET LE REACTIVER OU NON A LA FERMETURE DE LA PAGE EN FONCTION
+    if (!isAudioAllowed) {
+        toggleSound();
+    }
+
+    // Ré-affiche les boutons de contrôle
+    $(".controls").removeClass("d-none");
+
+    // Débloque le scroll du body
+    $("body").removeClass("no-scroll");
+}
 
 function applyLoopAudios() {
     script.forEach(element => {
@@ -292,18 +322,18 @@ function render(posS) {
                 $("#information").data("source", info.name);
                 $("#information").removeClass("d-none");
             } else {
-                $("#information").data("source", "");
-                $("#information").addClass("d-none");
+                $("#information").data("source", info.name);
+                $("#information").removeClass("d-none");
             }
         }
     }
 }
 
-// function syncControlsBtnAnimations() {
-//     setInterval(function () {
-//         $(".control").toggleClass("pulse");
-//     }, 1500);
-// }
+function syncControlsBtnAnimations() {
+    setInterval(function () {
+        $(".control").toggleClass("pulse");
+    }, 1500);
+}
 
 const script = [
     {
@@ -409,6 +439,11 @@ const script = [
             {
                 name: "scene1plan2-source",
                 start: 28,
+                end: 45
+            },
+            {
+                name: "scene1plan3-source",
+                start: 50,
                 end: 60
             }
         ]

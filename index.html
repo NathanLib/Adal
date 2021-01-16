@@ -1,157 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>L'histoire d'Adal</title>
 
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-            crossorigin="anonymous"
-        />
-        <link rel="stylesheet" href="public/css/master.css" />
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>L'histoire d'Adal</title>
 
-    <body class="no-scroll">
-        <div class="preloader js-preloader flex-center">
-            <div class="loader-text">
-                <p>Merci de patienter pendant le chargement de l'histoire</p>
-            </div>
-            <div class="dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
+    <link rel="stylesheet" href="public/css/master.css" />
+</head>
+
+<body class="no-scroll">
+    <div class="preloader js-preloader flex-center">
+        <div class="loader-text">
+            <p>Merci de patienter pendant le chargement de l'histoire</p>
         </div>
+        <div class="dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
 
-        <div id="homescreen">
-            <div class="container" id="menu-wrapper">
-                <div class="row">
-                    <h1 class="col-12 my-5" id="menu-title">
-                        L'HISTOIRE D'ADAL
-                    </h1>
-                    <div class="col-md-8" id="menu-description">
-                        <h2>Voyage au coeur du désert</h3>
+    <div id="homescreen">
+        <div class="container" id="menu-wrapper">
+            <div class="row">
+                <h1 class="col-12 my-5" id="menu-title">
+                    L'HISTOIRE D'ADAL
+                </h1>
+                <div class="col-md-8" id="menu-description">
+                    <h2>Voyage au coeur du désert</h3>
                         <h4>Expérience immersive</h5>
 
-                        <p>
-                            Vous serez amené à découvrir le désert, son environnement, ses peuples et ses cultures par l'intermédiaire
-                            d'un jeune garçon Touareg qui a pour objectif detraverser le désert, du Maroc jusqu'en Égypte, avec son père
-                            et son oncle, afin de se rendre au Caire pour vendre leur chameaux.
-                        </p>
-                    </div>
-                    <div class="col-md-4 p-3 mt-5 mt-md-0" id="menu-map">
-                        <img src="public/img/menu-map.png" alt="menu-map" />
-                    </div>
-                    <div class="col-12 my-5 my-xl-0" >
-                        <div class="start" id="homescreen_btn_wrapper">
-                            <button id="homescreen_btn">Commencer l'histoire</button>
-                        </div>
+                            <p>
+                                Vous serez amené à découvrir le désert, son environnement, ses peuples et ses cultures
+                                par l'intermédiaire
+                                d'un jeune garçon Touareg qui a pour objectif detraverser le désert, du Maroc jusqu'en
+                                Égypte, avec son père
+                                et son oncle, afin de se rendre au Caire pour vendre leur chameaux.
+                            </p>
+                </div>
+                <div class="col-md-4 p-3 mt-5 mt-md-0" id="menu-map">
+                    <img src="public/img/menu-map.png" alt="menu-map" />
+                </div>
+                <div class="col-12 my-5 my-xl-0">
+                    <div class="start" id="homescreen_btn_wrapper">
+                        <button id="homescreen_btn">Commencer l'histoire</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- DEFINIR LA TAILLE DU SCROLLER DYNAMIQUEMENT EN JS -->
-        <div id="scroller"></div>
+    <!-- DEFINIR LA TAILLE DU SCROLLER DYNAMIQUEMENT EN JS -->
+    <div id="scroller"></div>
 
-        <div id="screen">
-            <!-- Aide de début -->
-            <div id="start-help">
-                <div>
-                    <span></span>
-                    <p>Scrollez ou utilisez le bouton Play en bas à droite de l'écran</p>
-                </div>
+    <div id="screen">
+        <!-- Aide de début -->
+        <div id="start-help">
+            <div>
+                <span></span>
+                <p>Scrollez ou utilisez le bouton Play en bas à droite de l'écran</p>
             </div>
+        </div>
 
-            <!-- Scène 1 Plan 1 -->
-            <img id="scene1plan1" src="public/img/scene1plan1.svg" alt="scene 1 plan 1" />
+        <!-- Scène 1 Plan 1 -->
+        <img id="scene1plan1" src="public/img/scene1plan1.svg" alt="scene 1 plan 1" />
 
-            <!-- Scène 1 Plan 2 -->
-            <img id="scene1plan2" src="public/img/scene1plan2.svg" alt="scene 1 plan 2" />
-            <img id="scene1plan2-persos" src="public/img/scene1plan2-persos.svg" alt="scene 1 plan 2 persos" />
-            <div id="scene1plan2-text" class="adal-text">
-                <p>
-                    J'me présente, je m'apelle Henri, j'voudrais bien réussir ma vie, être aiméééééé, être beau gagner de l'argent, puis
-                    surtout être intelligent et pour tout ça il faudrait que j'bosse a plein temps
-                </p>
+        <!-- Scène 1 Plan 2 -->
+        <img id="scene1plan2" src="public/img/scene1plan2.svg" alt="scene 1 plan 2" />
+        <img id="scene1plan2-persos" src="public/img/scene1plan2-persos.svg" alt="scene 1 plan 2 persos" />
+        <div id="scene1plan2-text" class="adal-text">
+            <p>
+                J'me présente, je m'apelle Henri, j'voudrais bien réussir ma vie, être aiméééééé, être beau gagner de
+                l'argent, puis
+                surtout être intelligent et pour tout ça il faudrait que j'bosse a plein temps
+            </p>
+        </div>
+        <div id="scene1plan2-source" class="container-fluid source d-none">
+            <div class="close-source" id="close-source">
+                <img src="public/img/close.svg" alt="close button" />
             </div>
-            <!-- <div id="scene1plan2-source" class="container-fluid source d-none">
-                <div class="close-source" id="close-source">
-                    <img src="public/img/close.svg" alt="close button" />
-                </div>
-                <div class="row">
-                    <div class="col-md-8 work">
-                        <img src="public/img/works/martin-lindenau.jpg" alt="martin-lindenau" />
-                    </div>
-                    <div class="col-md-4 info">
+            <div class="row source-content mx-auto">
+                <div class="col-12 d-flex work">
+                    <img src="public/img/works/martin-lindenau.jpg" alt="martin-lindenau" />
+
+                    <div class="info">
                         <h3 class="info-title">Scène de Rue au Caire</h3>
                         <div class="info-details">
                             <p>Oil on canvas</p>
                             <p>61 x 101,5 cm. (24 x 40 in.)</p>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <hr />
-                    </div>
-                    <div class="col-12 biography">
-                        <h5>Artiste :</h5>
-                        <p>
-                            Amoureux fou de la lumière du sud, Martin Lindenau est né en 1948 dans les brumes du nord à Weimar en Allemagne.
-                            Peintre voyageur,il nous offre des voyages dans tous les pays méditerranéens inondés de soleil,puis nous emmène
-                            sur les côtes de France baignées de douceur de vivre dans une lumière plus nacrée. Il nous invite aussi dans les
-                            grands espaces Américains tout cela pour notre plus grand bonheur,avec talent et une grande sensibilité. A.G.
-                            2012
-                        </p>
-                    </div>
-                    <div class="col-12 link">
-                        <a href="http://martinlindenau.com/?lang=fr" target="_blank" rel="noopener noreferrer"> martinlindenau.com </a>
+                </div>
+                <div class="col-12">
+                    <hr />
+                </div>
+                <div class="col-12 biography">
+                    <h5>Artiste :</h5>
+                    <p>
+                        Amoureux fou de la lumière du sud, Martin Lindenau est né en 1948 dans les brumes du nord à
+                        Weimar en Allemagne.
+                        Peintre voyageur,il nous offre des voyages dans tous les pays méditerranéens inondés de
+                        soleil,puis nous emmène
+                        sur les côtes de France baignées de douceur de vivre dans une lumière plus nacrée. Il nous
+                        invite aussi dans les
+                        grands espaces Américains tout cela pour notre plus grand bonheur,avec talent et une grande
+                        sensibilité. A.G.
+                        2012
+                    </p>
+                </div>
+                <div class="col-12 link">
+                    <a href="http://martinlindenau.com/?lang=fr" target="_blank" rel="noopener noreferrer">
+                        martinlindenau.com </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="scene1plan3-source" class="container-fluid source d-none">
+            <div class="close-source" id="close-source">
+                <img src="public/img/close.svg" alt="close button" />
+            </div>
+            <div class="row source-content mx-auto">
+                <div class="col-12 d-flex work">
+                    <img src="public/img/works/image-108.jpg" alt="martin-lindenau" />
+        
+                    <div class="info">
+                        <h3 class="info-title">Scène de Rue au Caire</h3>
+                        <div class="info-details">
+                            <p>Oil on canvas</p>
+                            <p>61 x 101,5 cm. (24 x 40 in.)</p>
+                        </div>
                     </div>
                 </div>
-            </div> -->
-        </div>
-
-        <div id="metrics">
-            <p id="window-width">Window width : 0</p>
-            <p id="window-height">Window height : 0</p>
-            <p id="scroller-width">Scroller height : 0</p>
-            <p id="scroll-position">Scroll position : 0</p>
-            <p id="posS">PosS : 0</p>
-        </div>
-
-        <div class="controls">
-            <div class="control pulse d-none" id="information">
-                <img src="public/img/information.svg" alt="information control button" />
-            </div>
-            <div class="control pulse" id="sounds">
-                <img id="sound-off" class="" src="public/img/sound-off.svg" alt="sound off control button" />
-                <img id="sound-on" class="d-none" src="public/img/sound-on.svg" alt="sound on control button" />
-            </div>
-            <div class="control pulse" id="texts">
-                <img id="text-on" class="d-none" src="public/img/text.svg" alt="text on button" />
-                <img id="text-off" class="" src="public/img/no-text.svg" alt="no-text button" />
-            </div>
-            <div class="control pulse" id="auto-play">
-                <img id="auto-play-on" class="" src="public/img/play.svg" alt="auto-play button" />
-                <img id="auto-play-off" class="d-none" src="public/img/stop.svg" alt="auto-play button" />
+                <div class="col-12">
+                    <hr />
+                </div>
+                <div class="col-12 biography">
+                    <h5>Artiste :</h5>
+                    <p>
+                        Amoureux fou de la lumière du sud, Martin Lindenau est né en 1948 dans les brumes du nord à
+                        Weimar en Allemagne.
+                        Peintre voyageur,il nous offre des voyages dans tous les pays méditerranéens inondés de
+                        soleil,puis nous emmène
+                        sur les côtes de France baignées de douceur de vivre dans une lumière plus nacrée. Il nous
+                        invite aussi dans les
+                        grands espaces Américains tout cela pour notre plus grand bonheur,avec talent et une grande
+                        sensibilité. A.G.
+                        2012
+                    </p>
+                </div>
+                <div class="col-12 link">
+                    <a href="http://martinlindenau.com/?lang=fr" target="_blank" rel="noopener noreferrer">
+                        martinlindenau.com </a>
+                </div>
             </div>
         </div>
+    </div>
 
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"
-            integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=="
-            crossorigin="anonymous"
-        ></script>
-        <script src="public/js/jquery.preloadinator.min.js"></script>
-        <script>
-            $(".js-preloader").preloadinator({
-                animation: "fadeOut",
-                animationDuration: 400,
-                minTime: 1500
-            });
-        </script>
-        <script src="public/js/script.js" charset="utf-8"></script>
-    </body>
+    <div id="metrics">
+        <p id="window-width">Window width : 0</p>
+        <p id="window-height">Window height : 0</p>
+        <p id="scroller-width">Scroller height : 0</p>
+        <p id="scroll-position">Scroll position : 0</p>
+        <p id="posS">PosS : 0</p>
+    </div>
+
+    <div class="controls">
+        <div class="control pulse d-none" id="information">
+            <img src="public/img/information.svg" alt="information control button" />
+        </div>
+        <div class="control pulse" id="sounds">
+            <img id="sound-off" class="" src="public/img/sound-off.svg" alt="sound off control button" />
+            <img id="sound-on" class="d-none" src="public/img/sound-on.svg" alt="sound on control button" />
+        </div>
+        <div class="control pulse" id="texts">
+            <img id="text-on" class="d-none" src="public/img/text.svg" alt="text on button" />
+            <img id="text-off" class="" src="public/img/no-text.svg" alt="no-text button" />
+        </div>
+        <div class="control pulse" id="auto-play">
+            <img id="auto-play-on" class="" src="public/img/play.svg" alt="auto-play button" />
+            <img id="auto-play-off" class="d-none" src="public/img/stop.svg" alt="auto-play button" />
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"
+        integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=="
+        crossorigin="anonymous"></script>
+    <script src="public/js/jquery.preloadinator.min.js"></script>
+    <script>
+        $(".js-preloader").preloadinator({
+            animation: "fadeOut",
+            animationDuration: 400,
+            minTime: 1500
+        });
+    </script>
+    <script src="public/js/script.js" charset="utf-8"></script>
+</body>
+
 </html>

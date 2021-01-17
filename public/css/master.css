@@ -292,6 +292,28 @@ p {
 }
 
 /* ----------
+-- STYLES POUR LA MAP --
+---------- */
+
+#map {
+    z-index: 99;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-image: url("../img/map.svg");
+}
+
+#map svg path {
+    cursor: pointer;
+    stroke: rgba(255, 255, 255, 0);
+}
+
+#map svg path:hover,
+#map svg path:active {
+    fill: rgba(255, 255, 255, 0.25);
+}
+
+/* ----------
 -- STYLES POUR Les BOUTONS CONTROLS --
 ---------- */
 

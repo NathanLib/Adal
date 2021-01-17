@@ -10,12 +10,13 @@ $(window).on("load", function () {
     var scrollTop = 0;
     var timeMax = 360;
 
-    //Cache tous les boutons de contrôle tant qu'on est sur la homescreen
+    //Cache tous les boutons de contrôle et la mini-map tant qu'on est sur la homescreen
     $(".controls").hide();
+    $("#map").hide()
 
     displayMetrics();
     applyLoopAudios();
-    //syncControlsBtnAnimations();
+    syncControlsBtnAnimations();
 
     //Réinitialise le scroll au refresh de la page
     //https://stackoverflow.com/questions/9316415/the-same-old-issue-scrolltop0-not-working-in-chrome-safari
@@ -46,6 +47,15 @@ $(window).on("load", function () {
         }
     });
 
+    //Contrôle de la mini-map
+    $("#map svg path").each(function () {
+        $(this).click(function () {
+            var id = $(this).attr('id')
+            console.log(id);
+            goToDestination(id);
+        })
+    })
+
     $(window).scroll(function () {
         scrollTop = $("html, body").scrollTop();
         delta = scrollTop / totalHeight;
@@ -73,8 +83,9 @@ function launchGame() {
     //Autorise le son si ce n'est pas déjà fait
     !isAudioAllowed ? toggleSound() : (isAudioAllowed = false);
 
-    //Fait appparaitre tous les boutons de control
+    //Fait appparaitre tous les boutons de control et la mini-map
     $(".controls").show(1500);
+    $("#map").show(1500);
 }
 
 function toggleSound() {
@@ -179,8 +190,9 @@ function displaySource() {
         toggleSound();
     }
 
-    // Cache les boutons de control car problème de z-index avec position : fixed
+    // Cache les boutons de control et la mini-map car problème de z-index avec position : fixed
     $(".controls").addClass("d-none");
+    $("#map").addClass("d-none");
 
     // Bloque le scroll si la page source est ouverte
     $("body").addClass("no-scroll");
@@ -201,8 +213,9 @@ function closeSource() {
         toggleSound();
     }
 
-    // Ré-affiche les boutons de contrôle
+    // Ré-affiche les boutons de contrôle et la mini-map
     $(".controls").removeClass("d-none");
+    $("#map").removeClass("d-none");
 
     // Débloque le scroll du body
     $("body").removeClass("no-scroll");
@@ -241,6 +254,22 @@ function applyProperties(name, properties) {
     $("#" + name)
         .css("opacity", properties.opacity)
         .css("transform", "scale(" + properties.scale + ", " + properties.scale + ") translateX(" + posX + "px)");
+}
+
+// Faire la fonction pour qu'elle marche avec le posS
+function goToDestination(destination) {
+    switch (destination) {
+        case "pin-rissani":
+            $("html, body").animate(
+                {
+                    scrollTop: 3260
+                },
+                2000
+            );
+            break;
+        default:
+            break;
+    }
 }
 
 function render(posS) {
@@ -321,9 +350,10 @@ function render(posS) {
             if (posS >= info.start && posS <= info.end) {
                 $("#information").data("source", info.name);
                 $("#information").removeClass("d-none");
+                break;
             } else {
-                $("#information").data("source", info.name);
-                $("#information").removeClass("d-none");
+                $("#information").data("source", "");
+                $("#information").addClass("d-none");
             }
         }
     }
@@ -434,7 +464,10 @@ const script = [
                 end: 60
             }
         ],
-        texts: [{ name: "scene1plan2-text", start: 40, end: 50 }],
+        texts: [
+            { name: "scene1plan2-text", start: 40, end: 50 },
+            { name: "scene1plan2-text-2", start: 51, end: 60 }
+        ],
         information: [
             {
                 name: "scene1plan2-source",
@@ -457,8 +490,8 @@ const script = [
         states: [
             {
                 type: "translateX",
-                startValue: 0,
-                endValue: 0.5,
+                startValue: 1,
+                endValue: 0,
                 start: 22,
                 end: 60
             }
@@ -466,7 +499,7 @@ const script = [
         defaultProperties: {
             scale: 1,
             opacity: 1,
-            translateX: 0
+            translateX: 1
         },
         audios: [],
         texts: [],

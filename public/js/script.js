@@ -80,7 +80,7 @@ $(window).on("load", function () {
 
 		// Display dynamic metrics
 		$("#scroll-position").text(
-			"Scroll position : " + $("body,html").scrollTop()
+			"Scroll position : " + $("html, body").scrollTop()
 		);
 		$("#posS").text("PosS : " + posS.toFixed(3));
 	});
@@ -162,10 +162,10 @@ function fetchTexts() {
 function toggleAutoPlay() {
 	isAutoPlay = !isAutoPlay;
 
-	// Bloque le scroll quand l'utilisateur est en mode auto-play
-	$("body").toggleClass("no-scroll");
-
 	if (isAutoPlay) {
+		// Bloque le scroll quand l'utilisateur est en mode auto-play
+		$("body").addClass("no-scroll");
+
 		var bottom = $("#scroller").height() - $(window).height();
 		var duration = getDuration(bottom);
 
@@ -177,6 +177,7 @@ function toggleAutoPlay() {
 		);
 	} else {
 		$("html, body").stop();
+		$("body").removeClass("no-scroll");
 	}
 
 	// Change l'icon du bouton
@@ -199,14 +200,8 @@ function displaySource() {
 	if (!source) {
 		return;
 	}
-	$("#" + source).removeClass("d-none");
 
-	// Coupe le son s'il était autorisé
-	// !! IL FAUDRAIT ESSAYSER DE TROUVER UNE SOLUTION POUR SE SOUVENIR DE CE PARAMETRE
-	// ET LE REACTIVER OU NON A LA FERMETURE DE LA PAGE EN FONCTION
-	if (isAudioAllowed) {
-		toggleSound();
-	}
+	$("#" + source).removeClass("d-none");
 
 	// Cache les boutons de control et la mini-map car problème de z-index avec position : fixed
 	$(".controls").addClass("d-none");
@@ -214,6 +209,16 @@ function displaySource() {
 
 	// Bloque le scroll si la page source est ouverte
 	$("body").addClass("no-scroll");
+
+	// Coupe le son et l'auto-play s'ils étaient autorisés
+	// !! IL FAUDRAIT ESSAYSER DE TROUVER UNE SOLUTION POUR SE SOUVENIR DE CE PARAMETRE
+	// ET LE REACTIVER OU NON A LA FERMETURE DE LA PAGE EN FONCTION
+	if (isAudioAllowed) {
+		toggleSound();
+	}
+	if (isAutoPlay) {
+		toggleAutoPlay();
+	}
 }
 
 function closeSource() {
@@ -222,14 +227,8 @@ function closeSource() {
 	if (!source) {
 		return;
 	}
-	$("#" + source).addClass("d-none");
 
-	// Rétablie le son
-	// !! IL FAUDRAIT ESSAYSER DE TROUVER UNE SOLUTION POUR SE SOUVENIR DE CE PARAMETRE
-	// ET LE REACTIVER OU NON A LA FERMETURE DE LA PAGE EN FONCTION
-	if (!isAudioAllowed) {
-		toggleSound();
-	}
+	$("#" + source).addClass("d-none");
 
 	// Ré-affiche les boutons de contrôle et la mini-map
 	$(".controls").removeClass("d-none");
@@ -237,6 +236,16 @@ function closeSource() {
 
 	// Débloque le scroll du body
 	$("body").removeClass("no-scroll");
+
+	// Rétablie le son et l'auto-play
+	// !! IL FAUDRAIT ESSAYSER DE TROUVER UNE SOLUTION POUR SE SOUVENIR DE CE PARAMETRE
+	// ET LE REACTIVER OU NON A LA FERMETURE DE LA PAGE EN FONCTION
+	if (!isAudioAllowed) {
+		toggleSound();
+	}
+	if (!isAutoPlay) {
+		toggleAutoPlay();
+	}
 }
 
 function applyLoopAudios() {

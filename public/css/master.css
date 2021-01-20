@@ -26,6 +26,10 @@
 	-webkit-box-sizing: border-box;
 }
 
+html {
+	scroll-behavior: auto !important;
+}
+
 body {
 	box-sizing: border-box;
 	margin: 0;
@@ -288,7 +292,7 @@ p {
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 }
 
 /* ----------
@@ -444,75 +448,98 @@ p {
 
 #start-help {
 	z-index: 3;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: -o-linear-gradient(
-		top,
-		rgba(255, 255, 255, 0) 0%,
-		rgba(255, 255, 255, 0.35) 65%,
-		rgba(255, 255, 255, 0.35) 100%
-	);
-	background: linear-gradient(
-		to bottom,
-		rgba(255, 255, 255, 0) 0%,
-		rgba(255, 255, 255, 0.35) 65%,
-		rgba(255, 255, 255, 0.35) 100%
-	); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: rgba(255, 255, 255, 0.35);
+	overflow-y: scroll;
+	scrollbar-width: none;
 }
 
-#start-help > div {
-	display: -webkit-box;
-	display: -ms-flexbox;
+#start-help::-webkit-scrollbar {
+	display: none;
+}
+
+#start-help > .container {
+	max-width: 65%;
+	background: white;
+	border-radius: 1rem;
+	padding: 2rem;
+	margin: 3rem auto;
+	overflow-y: scroll;
+	scrollbar-width: none;
+}
+
+#start-help > .container::-webkit-scrollbar {
+	display: none;
+}
+
+@media screen and (min-width: 768px) {
+	#start-help > .container {
+		max-width: 650px;
+	}
+}
+
+#start-help h1,
+#start-help h4 {
+	font-family: "Skia";
+}
+
+.preview-buttons {
+	width: 48px;
+	height: 48px;
+	border-radius: 48px;
+	background: #efebe2;
 	display: flex;
-	position: absolute;
+	justify-content: center;
+	align-items: center;
+	margin-right: 1rem;
+}
+
+.preview-buttons img {
+	width: 24px;
+	height: 24px;
+}
+
+#mouse-animation {
+	display: -webkit-box;
+	display: flex;
 	bottom: 3.5rem;
-	left: 50%;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	transform: translateX(-50%);
-	-webkit-transform: translateX(-50%);
-	-ms-transform: translateX(-50%);
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-ms-flex-direction: column;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
 }
 
-#start-help span {
+#mouse-animation span {
 	box-sizing: border-box;
 	width: 30px;
 	height: 50px;
 	margin-bottom: 1rem;
-	border: 2px solid #fff;
+	border: 2px solid black;
 	border-radius: 50px;
 	-webkit-box-sizing: border-box;
 }
 
-#start-help span::before {
+#mouse-animation span::before {
 	position: absolute;
-	top: 10px;
 	left: 50%;
 	box-sizing: border-box;
 	width: 6px;
 	height: 6px;
+	margin-top: 3px;
 	margin-left: -3px;
 	border-radius: 100%;
 	content: "";
-	background-color: #fff;
+	background-color: black;
 	animation: mouse-animation 2s infinite;
 	-webkit-animation: mouse-animation 2s infinite;
 	-webkit-box-sizing: border-box;
 }
 
-#start-help p {
-	color: white;
+#mouse-animation p {
+	color: black;
 	font-size: 1.25rem;
 	font-family: "Skia";
 	text-align: center;

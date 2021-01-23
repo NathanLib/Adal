@@ -1,11 +1,11 @@
 // Initialisation des variables globales
 var isAudioAllowed = false;
 var isAutoPlay = false;
-var isTextDisplayed = false;
+var isTextDisplayed = true;
 
 var delta = 0;
 var scrollTop = 0;
-var timeMax = 360;
+var timeMax = 1440;
 var totalHeight = 0;
 
 $(window).on("load", function () {
@@ -97,7 +97,7 @@ function launchGame() {
 	$("#homescreen").fadeOut("slow");
 
 	//Autorise le son si ce n'est pas déjà fait
-	!isAudioAllowed ? toggleSound() : (isAudioAllowed = false);
+	if (!isAudioAllowed) toggleSound();
 
 	//Fait appparaitre tous les boutons de control et la mini-map
 	$(".controls").show(1500);
@@ -123,13 +123,9 @@ function fetchSounds() {
 	script.forEach((scene) => {
 		scene.audios.forEach((audio) => {
 			if (posS >= audio.start && posS <= audio.end && isAudioAllowed) {
-				if (audio.object.paused) {
-					audio.object.play();
-				}
+				if (audio.object.paused) audio.object.play();
 			} else {
-				if (!audio.object.paused) {
-					audio.object.pause();
-				}
+				if (!audio.object.paused) audio.object.pause();
 			}
 		});
 	});
@@ -188,7 +184,7 @@ function toggleAutoPlay() {
 
 function getDuration(target) {
 	var currentTop = $(window).scrollTop(),
-		rate = 3.25,
+		rate = 6,
 		distance;
 	distance = Math.abs(currentTop - target);
 	return distance * rate;
@@ -197,9 +193,7 @@ function getDuration(target) {
 function displaySource() {
 	var source = $("#information").data("source");
 
-	if (!source) {
-		return;
-	}
+	if (!source) return;
 
 	$("#" + source).removeClass("d-none");
 
@@ -298,7 +292,7 @@ function applyProperties(name, properties) {
 function goToDestination(destination) {
 	switch (destination) {
 		case "pin-rissani":
-			rissani_posS = 40;
+			rissani_posS = 2.5;
 			scrollTo(rissani_posS);
 			break;
 		default:
@@ -432,14 +426,14 @@ const script = [
 		type: "help",
 		name: "start-help",
 		start: 0,
-		end: 0.5,
+		end: 2,
 		states: [
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
 				start: 0,
-				end: 0.5,
+				end: 2,
 			},
 		],
 		defaultProperties: {
@@ -454,23 +448,23 @@ const script = [
 
 	{
 		type: "plan",
-		name: "scene1plan1",
+		name: "scene1plan1-background",
 		start: 0,
-		end: 30,
+		end: 25,
 		states: [
 			{
 				type: "scale",
 				startValue: 1,
-				endValue: 10,
-				start: 0,
-				end: 30,
+				endValue: 7.5,
+				start: 2.5,
+				end: 35,
 			},
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
 				start: 0,
-				end: 30,
+				end: 25,
 			},
 		],
 		defaultProperties: {
@@ -485,9 +479,9 @@ const script = [
 
 	{
 		type: "plan",
-		name: "scene1plan2",
+		name: "scene1plan2-background",
 		start: 0,
-		end: 60,
+		end: 350,
 		states: [
 			{
 				type: "opacity",
@@ -499,9 +493,16 @@ const script = [
 			{
 				type: "translateX",
 				startValue: 0,
-				endValue: 1,
+				endValue: 0.3,
 				start: 22,
-				end: 60,
+				end: 64,
+			},
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 325,
+				end: 350,
 			},
 		],
 		defaultProperties: {
@@ -511,14 +512,6 @@ const script = [
 		},
 		audios: [
 			{
-				name: "childs-laugh",
-				object: new Audio("public/sounds/childs-laugh.mp3"),
-				loop: true,
-				start: 22,
-				end: 60,
-			},
-
-			{
 				name: "camel-ride-india",
 				object: new Audio("public/sounds/camel-ride-india.wav"),
 				loop: true,
@@ -526,10 +519,7 @@ const script = [
 				end: 60,
 			},
 		],
-		texts: [
-			{ name: "scene1plan2-text", start: 40, end: 50 },
-			{ name: "scene1plan2-text-2", start: 51, end: 60 },
-		],
+		texts: [],
 		information: [
 			{
 				name: "scene1plan2-source",
@@ -545,23 +535,249 @@ const script = [
 	},
 
 	{
-		type: "persos",
-		name: "scene1plan2-persos",
+		type: "characters",
+		name: "scene1plan2-char",
 		start: 0,
 		end: 60,
 		states: [
 			{
+				type: "opacity",
+				startValue: 0.3,
+				endValue: 1,
+				start: 10,
+				end: 22,
+			},
+
+			{
 				type: "translateX",
 				startValue: 1,
-				endValue: 0,
+				endValue: -3,
 				start: 22,
 				end: 60,
+			},
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 42,
+				end: 59,
 			},
 		],
 		defaultProperties: {
 			scale: 1,
-			opacity: 1,
+			opacity: 0,
 			translateX: 1,
+		},
+		audios: [],
+		texts: [],
+		information: {},
+	},
+
+	{
+		type: "adal",
+		name: "scene1plan3-adal",
+		start: 65,
+		end: 320,
+		states: [
+			{
+				type: "opacity",
+				startValue: 0,
+				endValue: 1,
+				start: 66,
+				end: 69,
+			},
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 300,
+				end: 320,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 0,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [
+			{ name: "scene1plan3-text", start: 80, end: 140 },
+			{ name: "scene1plan3-text-2", start: 145, end: 235 },
+			{ name: "scene1plan3-text-3", start: 240, end: 300 },
+		],
+		information: {},
+	},
+
+	{
+		type: "plan",
+		name: "scene1plan4-background",
+		start: 320,
+		end: 600,
+		states: [
+			{
+				type: "opacity",
+				startValue: 0,
+				endValue: 1,
+				start: 320,
+				end: 350,
+			},
+
+			{
+				type: "scale",
+				startValue: 1,
+				endValue: 5,
+				start: 420,
+				end: 620,
+			},
+
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 420,
+				end: 580,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 0,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
+
+	{
+		type: "characters",
+		name: "scene1plan4-char",
+		start: 320,
+		end: 540,
+		states: [
+			{
+				type: "opacity",
+				startValue: 0,
+				endValue: 1,
+				start: 320,
+				end: 370,
+			},
+
+			{
+				type: "scale",
+				startValue: 1,
+				endValue: 5,
+				start: 420,
+				end: 620,
+			},
+
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 420,
+				end: 540,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 0,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: {},
+	},
+
+	{
+		type: "plan",
+		name: "scene1plan5-background",
+		start: 590,
+		end: 920,
+		states: [
+			{
+				type: "opacity",
+				startValue: 0,
+				endValue: 1,
+				start: 590,
+				end: 650,
+			},
+
+			{
+				type: "translateX",
+				startValue: 0,
+				endValue: 0.75,
+				start: 670,
+				end: 920,
+			},
+
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 900,
+				end: 920,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 0,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
+
+	{
+		type: "characters",
+		name: "scene1plan5-char",
+		start: 590,
+		end: 920,
+		states: [
+			{
+				type: "opacity",
+				startValue: 0,
+				endValue: 1,
+				start: 620,
+				end: 680,
+			},
+
+			{
+				type: "translateX",
+				startValue: 0,
+				endValue: 0.75,
+				start: 670,
+				end: 920,
+			},
+
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 900,
+				end: 920,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 0,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: {},
+	},
+
+	{
+		type: "plan",
+		name: "blackscreen",
+		start: 900,
+		end: 940,
+		states: [],
+		defaultProperties: {
+			scale: 1,
+			opacity: 1,
+			translateX: 0,
 		},
 		audios: [],
 		texts: [],

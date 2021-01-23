@@ -138,25 +138,11 @@
         </div>
 
         <!-- Scène 1 Plan 1 -->
-        <img id="scene1plan1" src="public/img/scene1plan1.svg" alt="scene 1 plan 1" />
+        <img id="scene1plan1-background" src="public/img/scene1plan1-background.svg" alt="scene1plan1-background" />
 
         <!-- Scène 1 Plan 2 -->
-        <img id="scene1plan2" src="public/img/scene1plan2.svg" alt="scene 1 plan 2" />
-        <img id="scene1plan2-persos" src="public/img/scene1plan2-persos.svg" alt="scene 1 plan 2 persos" />
-        <div id="scene1plan2-text" class="adal-text">
-            <p>
-                J'me présente, je m'apelle Henri, j'voudrais bien réussir ma vie, être aiméééééé, être beau gagner de
-                l'argent, puis
-                surtout être intelligent et pour tout ça il faudrait que j'bosse a plein temps
-            </p>
-        </div>
-        <div id="scene1plan2-text-2" class="adal-text">
-            <p>
-                surtout être intelligent et pour tout ça il faudrait que j'bosse a plein temps
-                J'me présente, je m'apelle Henri, j'voudrais bien réussir ma vie, être aiméééééé, être beau gagner de
-                l'argent, puis
-            </p>
-        </div>
+        <img id="scene1plan2-background" src="public/img/scene1plan2-background.svg" alt="scene1plan2-background" />
+        <img id="scene1plan2-char" src="public/img/scene1plan2-char.svg" alt="scene1plan2-char" />
 
         <div id="scene1plan2-source" class="container-fluid source d-none">
             <div class="close-source" id="close-source">
@@ -236,6 +222,39 @@
                 </div>
             </div>
         </div>
+
+        <!-- Scene 1 Plan 3 -->
+        <img id="scene1plan3-adal" src="public/img/scene1plan3-adal.svg" alt="scene1plan3-adal">
+        <div id="scene1plan3-text" class="adal-text">
+            <p>
+                Je m’appelle Adal, j’ai 13 ans et je viens chaque mois au Souk de Rissani pour accompagner mon père et
+                mon oncle, vendre nos ânes et nos moutons.
+            </p>
+        </div>
+        <div id="scene1plan3-text-2" class="adal-text">
+            <p>
+                A chaque fois, c’est un moment particulier pour moi, car c’est le seul jour où je me rends dans une
+                ville. Le reste du temps, nous vivons avec toute ma famille au cœur du désert et nous sommes presque
+                toujours seuls.
+            </p>
+        </div>
+        <div id="scene1plan3-text-3" class="adal-text">
+            <p>
+                Je suis heureux de rencontrer d’autres enfants que je ne connais pas et de découvrir les richesses et
+                les denrées du désert. Suis-moi, je vais te montrer !
+            </p>
+        </div>
+
+        <!-- Scene 1 Plan 4 -->
+        <img id="scene1plan4-background" src="public/img/scene1plan4-background.svg" alt="scene1plan4-background" />
+        <img id="scene1plan4-char" src="public/img/scene1plan4-char.svg" alt="scene1plan4-char" />
+
+        <!-- Scene 1 Plan 5 -->
+        <img id="scene1plan5-background" src="public/img/scene1plan5-background.svg" alt="scene1plan5-background" />
+        <img id="scene1plan5-char" src="public/img/scene1plan5-char.svg" alt="scene1plan5-char" />
+
+        <!-- Transition - Écran noir -->
+        <img id="blackscreen" src="public/img/blackscreen.svg" alt="blackscreen" />
     </div>
 
     <div id="metrics">
@@ -418,8 +437,8 @@
             <img id="sound-on" class="d-none" src="public/img/sound-on.svg" alt="sound on control button" />
         </div>
         <div class="control pulse" id="texts">
-            <img id="text-on" class="d-none" src="public/img/text.svg" alt="text on button" />
-            <img id="text-off" class="" src="public/img/no-text.svg" alt="no-text button" />
+            <img id="text-on" class="" src="public/img/text.svg" alt="text on button" />
+            <img id="text-off" class="d-none" src="public/img/no-text.svg" alt="no-text button" />
         </div>
         <div class="control pulse" id="auto-play">
             <img id="auto-play-on" class="" src="public/img/play.svg" alt="auto-play button" />
@@ -435,7 +454,7 @@
         $(".js-preloader").preloadinator({
             animation: "fadeOut",
             animationDuration: 400,
-            minTime: 1500
+            minTime: 500
         });
     </script>
     <script src="public/js/script.js" charset="utf-8"></script>

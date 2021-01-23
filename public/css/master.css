@@ -4,7 +4,12 @@
 
 @font-face {
 	font-family: "Open Sans";
-	src: url("public/fonts/OpenSans-SemiBold.eot");
+	src: local("OpenSans-SemiBold.eot");
+	src: local("OpenSans-SemiBold.eot?#iefix") format("embedded-opentype"),
+		local("OpenSans-SemiBold.woff2") format("woff2"),
+		local("OpenSans-SemiBold.woff") format("woff"),
+		local("OpenSans-SemiBold.ttf") format("truetype"),
+		local("OpenSans-SemiBold.svg#OpenSans-SemiBold") format("svg");
 	font-weight: 600;
 	font-style: normal;
 	font-display: swap;
@@ -12,7 +17,12 @@
 
 @font-face {
 	font-family: "Skia";
-	src: url("public/fonts/Skia-Regular.eot");
+	src: local("Skia-Regular.eot");
+	src: local("Skia-Regular.eot?#iefix") format("embedded-opentype"),
+		local("Skia-Regular.woff2") format("woff2"),
+		local("Skia-Regular.woff") format("woff"),
+		local("Skia-Regular.ttf") format("truetype"),
+		local("Skia-Regular.svg#Skia-Regular") format("svg");
 	font-weight: 100;
 	font-style: normal;
 	font-display: swap;
@@ -28,6 +38,7 @@
 
 html {
 	scroll-behavior: auto !important;
+	scroll-snap-type: y proximity;
 }
 
 body {
@@ -200,7 +211,7 @@ p {
 	color: white;
 	font-weight: bold;
 	font-size: 4rem;
-	font-family: "skia";
+	font-family: "Skia";
 }
 
 #menu-description {
@@ -669,6 +680,7 @@ p {
 	border: 4px solid white;
 	color: white;
 	font-family: "Open Sans";
+	font-size: 1.5rem;
 	text-align: center;
 	background-color: rgba(0, 0, 0, 0.25);
 	transform: translateX(-50%);
@@ -680,23 +692,30 @@ p {
 -- STYLES POUR SCENE 1 --
 ---------- */
 
-#scene1plan1 {
+/* Plan 1 */
+
+#scene1plan1-background {
 	z-index: 2;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
+	bottom: 0;
+	right: 0;
 	width: 100%;
 	height: 100%;
 	-o-object-fit: cover;
 	object-fit: cover;
 }
 
-#scene1plan2 {
+/* Plan 2 */
+
+#scene1plan2-background {
 	opacity: 0.5;
 	z-index: 0;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
+	bottom: 0;
 	width: auto;
 	height: 100%;
 	transform: scaleY(0.5, 0.5);
@@ -704,11 +723,89 @@ p {
 	-ms-transform: scaleY(0.5, 0.5);
 }
 
-#scene1plan2-persos {
+#scene1plan2-char {
 	z-index: 1;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
+	bottom: 0;
 	width: auto;
 	height: 100%;
+}
+
+/* Plan 3 */
+
+#scene1plan3-adal {
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 1rem;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+}
+
+/* Plan 4 */
+
+#scene1plan4-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	-o-object-fit: cover;
+	object-fit: cover;
+}
+
+#scene1plan4-char {
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	-o-object-fit: cover;
+	object-fit: cover;
+}
+
+/* Plan 5 */
+
+#scene1plan5-background {
+	z-index: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+	object-fit: cover;
+}
+
+#scene1plan5-char {
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+}
+
+/* Écran noir */
+
+#blackscreen {
+	z-index: -1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	-o-object-fit: cover;
+	object-fit: cover;
 }

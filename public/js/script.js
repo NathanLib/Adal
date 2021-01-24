@@ -2,7 +2,6 @@
 var isAudioAllowed = false;
 var isAutoPlay = false;
 var isTextDisplayed = true;
-var isSourceAvailable = false;
 
 var wasAudio = false;
 var wasAutoPlay = false;
@@ -325,12 +324,12 @@ function scrollTo(dest_posS) {
 }
 
 function render(posS) {
+	// Reset du bouton information
+	$("#information").data("source", "");
+	$("#information").addClass("d-none");
+
 	for (let i = 0; i < script.length; i++) {
 		const scene = script[i];
-
-		// Reset du bouton information
-		$("#information").data("source", "");
-		$("#information").addClass("d-none");
 
 		if (posS >= scene.start && posS <= scene.end) {
 			$("#" + scene.name).show();

@@ -656,6 +656,11 @@ p {
 	animation: scrollUp 24s linear 1s infinite;
 }
 
+.remerciements img {
+	max-width: 10rem;
+	margin: auto;
+}
+
 @supports (transform: translate3d(0px, 0px, 0px)) {
 	.remerciements-wrap {
 		overflow: hidden;

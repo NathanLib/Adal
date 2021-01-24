@@ -78,7 +78,6 @@ $(window).on("load", function () {
 	$(window).scroll(function () {
 		scrollTop = $("html, body").scrollTop();
 
-		// NE FONCTIONNE PAS
 		if (scrollTop < position) {
 			fetchSounds();
 		}
@@ -89,6 +88,15 @@ $(window).on("load", function () {
 		posS = delta * timeMax;
 
 		render(posS);
+
+		// Lance la fin automatique
+		if (posS >= 18000) {
+			//Cache tous les boutons de contrôle et la mini-map tant qu'on est sur la homescreen
+			$(".controls").fadeOut();
+			$("#map").fadeOut();
+
+			if (!isAutoPlay) toggleAutoPlay();
+		}
 
 		// Display dynamic metrics
 		$("#scroll-position").text(
@@ -697,7 +705,7 @@ const script = [
 				startValue: 1,
 				endValue: 0,
 				start: 3725,
-				end: 3900,
+				end: 3800,
 			},
 		],
 		defaultProperties: {
@@ -837,7 +845,7 @@ const script = [
 		type: "plan",
 		name: "scene1plan5-background",
 		start: 4600,
-		end: 7500,
+		end: 9200,
 		states: [
 			{
 				type: "opacity",
@@ -851,16 +859,16 @@ const script = [
 				type: "translateX",
 				startValue: 0,
 				endValue: 1,
-				start: 6100,
-				end: 7300,
+				start: 8200,
+				end: 9200,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 7400,
-				end: 7500,
+				start: 9100,
+				end: 9200,
 			},
 		],
 		defaultProperties: {
@@ -868,13 +876,30 @@ const script = [
 			opacity: 0,
 			translateX: 0,
 		},
-		audios: [],
+		audios: [
+			{
+				name: "children",
+				object: new Audio("public/sounds/children.wav"),
+				loop: true,
+				alreadyPlayed: false,
+				start: 8000,
+				end: 9200,
+			},
+			{
+				name: "donkey",
+				object: new Audio("public/sounds/donkey.wav"),
+				loop: true,
+				alreadyPlayed: false,
+				start: 8000,
+				end: 9200,
+			},
+		],
 		texts: [],
 		information: [
 			{
 				name: "scene1plan5-source",
-				start: 4600,
-				end: 7450,
+				start: 8300,
+				end: 9200,
 			},
 		],
 	},
@@ -883,7 +908,7 @@ const script = [
 		type: "characters",
 		name: "scene1plan5-char",
 		start: 4600,
-		end: 7500,
+		end: 9200,
 		states: [
 			{
 				type: "opacity",
@@ -897,16 +922,16 @@ const script = [
 				type: "translateX",
 				startValue: 0,
 				endValue: 1,
-				start: 6100,
-				end: 7300,
+				start: 8200,
+				end: 9200,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 7400,
-				end: 7500,
+				start: 9100,
+				end: 9200,
 			},
 		],
 		defaultProperties: {
@@ -923,7 +948,7 @@ const script = [
 		type: "adal",
 		name: "scene1plan5-adal",
 		start: 4700,
-		end: 6250,
+		end: 8100,
 		states: [
 			{
 				type: "opacity",
@@ -937,8 +962,8 @@ const script = [
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 6000,
-				end: 6250,
+				start: 8000,
+				end: 8100,
 			},
 		],
 		defaultProperties: {
@@ -946,10 +971,27 @@ const script = [
 			opacity: 0,
 			translateX: 0,
 		},
-		audios: [],
+		audios: [
+			{
+				name: "scene1plan5-voiceover",
+				object: new Audio("public/sounds/scene1plan5-voiceover.wav"),
+				loop: false,
+				alreadyPlayed: false,
+				start: 4730,
+				end: 6395,
+			},
+			{
+				name: "scene1plan5-voiceover-2",
+				object: new Audio("public/sounds/scene1plan5-voiceover-2.wav"),
+				loop: false,
+				alreadyPlayed: false,
+				start: 6400,
+				end: 8000,
+			},
+		],
 		texts: [
-			{ name: "scene1plan5-text", start: 4730, end: 5495 },
-			{ name: "scene1plan5-text-2", start: 5500, end: 5950 },
+			{ name: "scene1plan5-text", start: 4730, end: 6395 },
+			{ name: "scene1plan5-text-2", start: 6400, end: 8000 },
 		],
 		information: [],
 	},
@@ -957,8 +999,8 @@ const script = [
 	{
 		type: "plan",
 		name: "blackscreen-scene1plan5",
-		start: 7400,
-		end: 7550,
+		start: 9100,
+		end: 9300,
 		states: [],
 		defaultProperties: {
 			scale: 1,
@@ -970,226 +1012,300 @@ const script = [
 		information: [],
 	},
 
-	// {
-	// 	type: "plan",
-	// 	name: "scene2plan1-background",
-	// 	start: 900,
-	// 	end: 1200,
-	// 	states: [
-	// 		{
-	// 			type: "opacity",
-	// 			startValue: 1,
-	// 			endValue: 0,
-	// 			start: 1000,
-	// 			end: 1200,
-	// 		},
-	// 	],
-	// 	defaultProperties: {
-	// 		scale: 1,
-	// 		opacity: 1,
-	// 		translateX: 0,
-	// 	},
-	// 	audios: [],
-	// 	texts: [],
-	// 	information: [],
-	// },
+	{
+		type: "plan",
+		name: "scene2plan1-background",
+		start: 9300,
+		end: 10000,
+		states: [
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 9500,
+				end: 10000,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 1,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
 
-	// {
-	// 	type: "plan",
-	// 	name: "scene2plan2-background",
-	// 	start: 900,
-	// 	end: 2850,
-	// 	states: [
-	// 		{
-	// 			type: "opacity",
-	// 			startValue: 0,
-	// 			endValue: 1,
-	// 			start: 1000,
-	// 			end: 1200,
-	// 		},
+	{
+		type: "plan",
+		name: "scene2plan2-background",
+		start: 9500,
+		end: 17800,
+		states: [
+			{
+				type: "opacity",
+				startValue: 0,
+				endValue: 1,
+				start: 9500,
+				end: 10000,
+			},
 
-	// 		{
-	// 			type: "translateX",
-	// 			startValue: 0,
-	// 			endValue: 1,
-	// 			start: 1200,
-	// 			end: 2850,
-	// 		},
+			{
+				type: "translateX",
+				startValue: 0,
+				endValue: 1,
+				start: 10100,
+				end: 17800,
+			},
 
-	// 		{
-	// 			type: "opacity",
-	// 			startValue: 1,
-	// 			endValue: 0,
-	// 			start: 1400,
-	// 			end: 1750,
-	// 		},
-	// 	],
-	// 	defaultProperties: {
-	// 		scale: 1,
-	// 		opacity: 0,
-	// 		translateX: 0,
-	// 	},
-	// 	audios: [],
-	// 	texts: [],
-	// 	information: [],
-	// },
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 10500,
+				end: 12500,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 0,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
 
-	// {
-	// 	type: "characters",
-	// 	name: "scene2plan2-char",
-	// 	start: 900,
-	// 	end: 2300,
-	// 	states: [
-	// 		{
-	// 			type: "opacity",
-	// 			startValue: 0,
-	// 			endValue: 1,
-	// 			start: 1100,
-	// 			end: 1250,
-	// 		},
+	{
+		type: "characters",
+		name: "scene2plan2-char",
+		start: 10000,
+		end: 15000,
+		states: [
+			{
+				type: "opacity",
+				startValue: 0,
+				endValue: 1,
+				start: 10000,
+				end: 10250,
+			},
 
-	// 		{
-	// 			type: "translateX",
-	// 			startValue: 0,
-	// 			endValue: 1.5,
-	// 			start: 1200,
-	// 			end: 2200,
-	// 		},
+			{
+				type: "translateX",
+				startValue: 0,
+				endValue: 1.5,
+				start: 10500,
+				end: 15000,
+			},
 
-	// 		{
-	// 			type: "opacity",
-	// 			startValue: 1,
-	// 			endValue: 0,
-	// 			start: 1400,
-	// 			end: 2200,
-	// 		},
-	// 	],
-	// 	defaultProperties: {
-	// 		scale: 1,
-	// 		opacity: 0,
-	// 		translateX: 0,
-	// 	},
-	// 	audios: [],
-	// 	texts: [],
-	// 	information: [],
-	// },
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 13600,
+				end: 15000,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 0,
+			translateX: 0,
+		},
+		audios: [
+			{
+				name: "camels",
+				object: new Audio("public/sounds/camels.wav"),
+				loop: true,
+				alreadyPlayed: false,
+				start: 10500,
+				end: 15000,
+			},
+		],
+		texts: [],
+		information: [],
+	},
 
-	// {
-	// 	type: "plan",
-	// 	name: "scene2plan3-background",
-	// 	start: 900,
-	// 	end: 2850,
-	// 	states: [
-	// 		{
-	// 			type: "translateX",
-	// 			startValue: 0,
-	// 			endValue: 1,
-	// 			start: 1200,
-	// 			end: 2850,
-	// 		},
+	{
+		type: "plan",
+		name: "scene2plan3-background",
+		start: 9500,
+		end: 17800,
+		states: [
+			{
+				type: "translateX",
+				startValue: 0,
+				endValue: 1,
+				start: 10100,
+				end: 17800,
+			},
 
-	// 		{
-	// 			type: "opacity",
-	// 			startValue: 1,
-	// 			endValue: 0,
-	// 			start: 1950,
-	// 			end: 2300,
-	// 		},
-	// 	],
-	// 	defaultProperties: {
-	// 		scale: 1,
-	// 		opacity: 1,
-	// 		translateX: 0,
-	// 	},
-	// 	audios: [],
-	// 	texts: [],
-	// 	information: [],
-	// },
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 13000,
+				end: 15000,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 1,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
 
-	// {
-	// 	type: "plan",
-	// 	name: "scene2plan4-background",
-	// 	start: 900,
-	// 	end: 2850,
-	// 	states: [
-	// 		{
-	// 			type: "translateX",
-	// 			startValue: 0,
-	// 			endValue: 1,
-	// 			start: 1200,
-	// 			end: 2850,
-	// 		},
+	{
+		type: "plan",
+		name: "scene2plan4-background",
+		start: 9500,
+		end: 18200,
+		states: [
+			{
+				type: "translateX",
+				startValue: 0,
+				endValue: 1,
+				start: 10100,
+				end: 17800,
+			},
 
-	// 		{
-	// 			type: "opacity",
-	// 			startValue: 1,
-	// 			endValue: 0,
-	// 			start: 2500,
-	// 			end: 2850,
-	// 		},
-	// 	],
-	// 	defaultProperties: {
-	// 		scale: 1,
-	// 		opacity: 1,
-	// 		translateX: 0,
-	// 	},
-	// 	audios: [],
-	// 	texts: [],
-	// 	information: [],
-	// },
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 17500,
+				end: 18000,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 1,
+			translateX: 0,
+		},
+		audios: [
+			{
+				name: "cicade-at-nighttime",
+				object: new Audio("public/sounds/cicade-at-nighttime.wav"),
+				loop: true,
+				alreadyPlayed: false,
+				start: 14000,
+				end: 18200,
+			},
 
-	// {
-	// 	type: "plan",
-	// 	name: "scene2plan4-char",
-	// 	start: 2100,
-	// 	end: 2850,
-	// 	states: [
-	// 		{
-	// 			type: "translateX",
-	// 			startValue: 2,
-	// 			endValue: -2,
-	// 			start: 1900,
-	// 			end: 2850,
-	// 		},
+			{
+				name: "night-animals",
+				object: new Audio("public/sounds/night-animals.wav"),
+				loop: true,
+				alreadyPlayed: false,
+				start: 15000,
+				end: 18200,
+			},
+		],
+		texts: [],
+		information: [],
+	},
 
-	// 		{
-	// 			type: "opacity",
-	// 			startValue: 1,
-	// 			endValue: 0,
-	// 			start: 2300,
-	// 			end: 2700,
-	// 		},
-	// 	],
-	// 	defaultProperties: {
-	// 		scale: 1,
-	// 		opacity: 1,
-	// 		translateX: 3,
-	// 	},
-	// 	audios: [],
-	// 	texts: [],
-	// 	information: [],
-	// },
+	{
+		type: "plan",
+		name: "scene2plan4-char",
+		start: 14500,
+		end: 17800,
+		states: [
+			{
+				type: "translateX",
+				startValue: 2,
+				endValue: -2,
+				start: 14700,
+				end: 17800,
+			},
 
-	// {
-	// 	type: "plan",
-	// 	name: "blackscreen-scene2plan4",
-	// 	start: 2500,
-	// 	end: 2900,
-	// 	states: [],
-	// 	defaultProperties: {
-	// 		scale: 1,
-	// 		opacity: 1,
-	// 		translateX: 0,
-	// 	},
-	// 	audios: [],
-	// 	texts: [],
-	// 	information: [],
-	// },
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 16500,
+				end: 17800,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 1,
+			translateX: 3,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
+
+	{
+		type: "plan",
+		name: "blackscreen-scene2plan4",
+		start: 17000,
+		end: 18200,
+		states: [],
+		defaultProperties: {
+			scale: 1,
+			opacity: 1,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
+
+	{
+		type: "plan",
+		name: "team",
+		start: 18100,
+		end: 18600,
+		states: [
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 18500,
+				end: 18600,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 1,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
+	{
+		type: "plan",
+		name: "blackscreen-end",
+		start: 18500,
+		end: 18625,
+		states: [],
+		defaultProperties: {
+			scale: 1,
+			opacity: 1,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
+	{
+		type: "plan",
+		name: "remerciement",
+		start: 18624,
+		end: 20000,
+		states: [],
+		defaultProperties: {
+			scale: 1,
+			opacity: 1,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [],
+		information: [],
+	},
 ];
-
-// Créer une fonction ease-in pour le render
-
-// Je le garde ici pour me rappeler comment faire un timer :)
-// setTimeout(() => {
-//     audio_menu.pause();
-// }, 2000);

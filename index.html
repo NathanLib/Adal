@@ -439,21 +439,40 @@
         ----------  -->
 
         <!-- Scene 2 Plan 1 -->
-        <!-- <img id="scene2plan1-background" src="public/img/scene2plan1-background.svg" alt="scene2plan1-background" /> -->
+        <img id="scene2plan1-background" src="public/img/scene2plan1-background.svg" alt="scene2plan1-background" />
 
         <!-- Scene 2 Plan 2 -->
-        <!-- <img id="scene2plan2-background" src="public/img/scene2plan2-background.svg" alt="scene2plan2-background" /> -->
-        <!-- <img id="scene2plan2-char" src="public/img/scene2plan2-char.svg" alt="scene2plan2-char" /> -->
+        <img id="scene2plan2-background" src="public/img/scene2plan2-background.svg" alt="scene2plan2-background" />
+        <img id="scene2plan2-char" src="public/img/scene2plan2-char.svg" alt="scene2plan2-char" />
 
         <!-- Scene 2 Plan 3 -->
-        <!-- <img id="scene2plan3-background" src="public/img/scene2plan3-background.svg" alt="scene2plan3-background" /> -->
+        <img id="scene2plan3-background" src="public/img/scene2plan3-background.svg" alt="scene2plan3-background" />
 
         <!-- Scene 2 Plan 4 -->
-        <!-- <img id="scene2plan4-background" src="public/img/scene2plan4-background.svg" alt="scene2plan4-background" /> -->
-        <!-- <img id="scene2plan4-char" src="public/img/scene2plan4-char.svg" alt="scene2plan4-char" /> -->
+        <img id="scene2plan4-background" src="public/img/scene2plan4-background.svg" alt="scene2plan4-background" />
+        <img id="scene2plan4-char" src="public/img/scene2plan4-char.svg" alt="scene2plan4-char" />
 
         <!-- Transition - Écran noir -->
-        <!-- <img id="blackscreen-scene2plan4" src="public/img/blackscreen.svg" alt="blackscreen" /> -->
+        <img id="blackscreen-scene2plan4" src="public/img/blackscreen.svg" alt="blackscreen" />
+
+        <div id="team">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>Fin.</h1>
+                    </div>
+                    <div class="col-12 my-5">
+                        <img src="public/img/team.png" alt="team">
+                    </div>
+                    <div class="col-12 mt-3">
+                        <h3>Merci d'avoir suivi l'aventure d'Adal !</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transition - Écran noir -->
+        <img id="blackscreen-end" src="public/img/blackscreen.svg" alt="blackscreen" />
 
         <div id="remerciement" class="remerciements-wrap">
             <div class="container remerciements">
@@ -493,7 +512,7 @@
         </div>
     </div>
 
-    <div id="metrics">
+    <div id="metrics" class="d-none">
         <p id="window-width">Window width : 0</p>
         <p id="window-height">Window height : 0</p>
         <p id="scroller-width">Scroller height : 0</p>
@@ -690,7 +709,7 @@
         $(".js-preloader").preloadinator({
             animation: "fadeOut",
             animationDuration: 400,
-            minTime: 3000
+            minTime: 5000
         });
     </script>
     <script src="public/js/script.js" charset="utf-8"></script>

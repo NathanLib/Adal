@@ -592,8 +592,47 @@ p {
 }
 
 /* ----------
--- STYLES POUR LES REMERCIEMENTS --
+-- STYLES POUR L'ÉCRAN DE FIN ET LES REMERCIEMENTS --
 ---------- */
+
+#team {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #fef9f6;
+	color: #734d3f;
+	text-align: center;
+	overflow: auto;
+	font-family: "Skia";
+}
+
+#team .container {
+	position: absolute;
+	max-width: 75%;
+	margin: auto;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#team h1 {
+	font-size: 4rem;
+	font-weight: bold;
+}
+
+#team h3 {
+	font-size: 2.5rem;
+}
+
+#team img {
+	max-height: 50vh;
+	max-width: 100%;
+	margin: auto;
+}
 
 .remerciements-wrap {
 	position: fixed;
@@ -604,6 +643,7 @@ p {
 	width: 100%;
 	height: 100%;
 	background-color: rgb(10, 10, 10);
+	font-family: "Skia";
 	color: white;
 	text-align: center;
 	overflow: auto;
@@ -971,5 +1011,19 @@ p {
 	width: 100%;
 	height: 100%;
 	-o-object-fit: cover;
+	object-fit: cover;
+}
+
+/* Écran noir */
+
+#blackscreen-end {
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
 }

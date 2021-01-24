@@ -11,6 +11,8 @@ var scrollTop = 0;
 var timeMax = 20000;
 var totalHeight = 0;
 
+var position = $(window).scrollTop();
+
 $(window).on("load", function () {
 	// Attribution des valeurs
 	totalHeight = $("#scroller").height();
@@ -75,6 +77,13 @@ $(window).on("load", function () {
 
 	$(window).scroll(function () {
 		scrollTop = $("html, body").scrollTop();
+
+		if (scrollTop < position) {
+			console.log("on remooooonte !");
+			fetchSounds();
+		}
+		position = scrollTop;
+
 		delta = scrollTop / totalHeight;
 
 		posS = delta * timeMax;
@@ -107,6 +116,14 @@ function launchGame() {
 	$("#map").show(1500);
 }
 
+function applyLoopAudios() {
+	script.forEach((element) => {
+		element.audios.forEach((audio) => {
+			if (audio.loop) audio.object.loop = true;
+		});
+	});
+}
+
 function toggleSound() {
 	// Change le statut du booléen qui gère le son
 	if ($("#sounds #sound-off").hasClass("d-none")) {
@@ -125,8 +142,15 @@ function toggleSound() {
 function fetchSounds() {
 	script.forEach((scene) => {
 		scene.audios.forEach((audio) => {
+			if (audio.start >= posS && !audio.loop) {
+				audio.alreadyPlayed = false;
+			}
+
 			if (posS >= audio.start && posS <= audio.end && isAudioAllowed) {
-				if (audio.object.paused) audio.object.play();
+				if (audio.object.paused && !audio.alreadyPlayed) {
+					if (!audio.loop) audio.alreadyPlayed = true;
+					audio.object.play();
+				}
 			} else {
 				if (!audio.object.paused) audio.object.pause();
 			}
@@ -243,15 +267,6 @@ function closeSource() {
 		toggleAutoPlay();
 		wasAutoPlay = false;
 	}
-}
-
-function applyLoopAudios() {
-	script.forEach((element) => {
-		element.audios.forEach((audio) => {
-			console.log(audio.loop);
-			if (audio.loop) audio.object.loop = true;
-		});
-	});
 }
 
 function calculateRatio(posS, startValue, endValue, start, end) {
@@ -396,8 +411,9 @@ function render(posS) {
 			const audio = scene.audios[k];
 
 			if (posS >= audio.start && posS <= audio.end && isAudioAllowed) {
-				if (audio.object.paused) {
+				if (audio.object.paused && !audio.alreadyPlayed) {
 					audio.object.play();
+					if (!audio.loop) audio.alreadyPlayed = true;
 				}
 			} else {
 				if (!audio.object.paused) {
@@ -499,7 +515,7 @@ const script = [
 		type: "plan",
 		name: "scene1plan2-background",
 		start: 0,
-		end: 890,
+		end: 1090,
 		states: [
 			{
 				type: "opacity",
@@ -519,8 +535,8 @@ const script = [
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 845,
-				end: 890,
+				start: 1045,
+				end: 1090,
 			},
 		],
 		defaultProperties: {
@@ -528,15 +544,7 @@ const script = [
 			opacity: 0.5,
 			translateX: 0,
 		},
-		audios: [
-			{
-				name: "camel-ride-india",
-				object: new Audio("public/sounds/camel-ride-india.wav"),
-				loop: true,
-				start: 45,
-				end: 60,
-			},
-		],
+		audios: [],
 		texts: [],
 		information: [
 			{
@@ -590,7 +598,7 @@ const script = [
 		type: "adal",
 		name: "scene1plan3-adal",
 		start: 65,
-		end: 870,
+		end: 1070,
 		states: [
 			{
 				type: "opacity",
@@ -604,7 +612,7 @@ const script = [
 				startValue: 1,
 				endValue: 0,
 				start: 830,
-				end: 850,
+				end: 1050,
 			},
 		],
 		defaultProperties: {
@@ -617,34 +625,37 @@ const script = [
 				name: "scene1plan3-voiceover.wav",
 				object: new Audio("public/sounds/scene1plan3-voiceover.m4a"),
 				loop: false,
+				alreadyPlayed: false,
 				start: 80,
-				end: 280,
+				end: 260,
 			},
 			{
 				name: "scene1plan3-voiceover-2.wav",
 				object: new Audio("public/sounds/scene1plan3-voiceover-2.wav"),
 				loop: false,
-				start: 285,
-				end: 605,
+				alreadyPlayed: false,
+				start: 265,
+				end: 695,
 			},
 			{
 				name: "scene1plan3-voiceover-3.wav",
 				object: new Audio("public/sounds/scene1plan3-voiceover-3.wav"),
 				loop: false,
-				start: 610,
-				end: 810,
+				alreadyPlayed: false,
+				start: 700,
+				end: 1010,
 			},
 		],
 		texts: [
-			{ name: "scene1plan3-text", start: 80, end: 280 },
-			{ name: "scene1plan3-text-2", start: 285, end: 605 },
-			{ name: "scene1plan3-text-3", start: 610, end: 810 },
+			{ name: "scene1plan3-text", start: 80, end: 260 },
+			{ name: "scene1plan3-text-2", start: 265, end: 695 },
+			{ name: "scene1plan3-text-3", start: 700, end: 1010 },
 		],
 		information: [
 			{
 				name: "scene1plan3-source",
 				start: 70,
-				end: 850,
+				end: 1050,
 			},
 		],
 	},
@@ -652,22 +663,22 @@ const script = [
 	{
 		type: "adal",
 		name: "scene1plan4-adal",
-		start: 920,
-		end: 2400,
+		start: 1120,
+		end: 2600,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 920,
-				end: 930,
+				start: 1120,
+				end: 1130,
 			},
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 2325,
-				end: 2400,
+				start: 2525,
+				end: 2600,
 			},
 		],
 		defaultProperties: {
@@ -677,8 +688,8 @@ const script = [
 		},
 		audios: [],
 		texts: [
-			{ name: "scene1plan4-text", start: 940, end: 1595 },
-			{ name: "scene1plan4-text-2", start: 1600, end: 2300 },
+			{ name: "scene1plan4-text", start: 1140, end: 1795 },
+			{ name: "scene1plan4-text-2", start: 1800, end: 2500 },
 		],
 		information: [],
 	},
@@ -686,31 +697,31 @@ const script = [
 	{
 		type: "plan",
 		name: "scene1plan4-background",
-		start: 840,
-		end: 3200,
+		start: 1040,
+		end: 3400,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 845,
-				end: 890,
+				start: 1045,
+				end: 1090,
 			},
 
 			{
 				type: "scale",
 				startValue: 1,
 				endValue: 5,
-				start: 2500,
-				end: 3100,
+				start: 2700,
+				end: 3300,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 2500,
-				end: 3100,
+				start: 2700,
+				end: 3300,
 			},
 		],
 		defaultProperties: {
@@ -723,8 +734,8 @@ const script = [
 		information: [
 			{
 				name: "scene1plan4-source",
-				start: 2450,
-				end: 3150,
+				start: 2550,
+				end: 3350,
 			},
 		],
 	},
@@ -732,31 +743,31 @@ const script = [
 	{
 		type: "characters",
 		name: "scene1plan4-char",
-		start: 845,
-		end: 3200,
+		start: 1045,
+		end: 3400,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 845,
-				end: 915,
+				start: 1045,
+				end: 1115,
 			},
 
 			{
 				type: "scale",
 				startValue: 1,
 				endValue: 5,
-				start: 2500,
-				end: 3100,
+				start: 2700,
+				end: 3300,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 2500,
-				end: 3100,
+				start: 2700,
+				end: 3300,
 			},
 		],
 		defaultProperties: {
@@ -772,31 +783,31 @@ const script = [
 	{
 		type: "plan",
 		name: "scene1plan5-background",
-		start: 3050,
-		end: 6000,
+		start: 3250,
+		end: 6200,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 3050,
-				end: 3150,
+				start: 3250,
+				end: 3350,
 			},
 
 			{
 				type: "translateX",
 				startValue: 0,
 				endValue: 1,
-				start: 4600,
-				end: 6000,
+				start: 4800,
+				end: 6200,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 5900,
-				end: 6000,
+				start: 6100,
+				end: 6200,
 			},
 		],
 		defaultProperties: {
@@ -809,8 +820,8 @@ const script = [
 		information: [
 			{
 				name: "scene1plan5-source",
-				start: 3100,
-				end: 5950,
+				start: 3300,
+				end: 6150,
 			},
 		],
 	},
@@ -818,31 +829,31 @@ const script = [
 	{
 		type: "characters",
 		name: "scene1plan5-char",
-		start: 3050,
-		end: 6000,
+		start: 3250,
+		end: 6200,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 3050,
-				end: 3150,
+				start: 3250,
+				end: 3350,
 			},
 
 			{
 				type: "translateX",
 				startValue: 0,
 				endValue: 1,
-				start: 4600,
-				end: 6000,
+				start: 4800,
+				end: 6200,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 5900,
-				end: 6000,
+				start: 6100,
+				end: 6200,
 			},
 		],
 		defaultProperties: {
@@ -858,23 +869,23 @@ const script = [
 	{
 		type: "adal",
 		name: "scene1plan5-adal",
-		start: 3200,
-		end: 4550,
+		start: 3400,
+		end: 4750,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 3200,
-				end: 3220,
+				start: 3400,
+				end: 3420,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 4500,
-				end: 4550,
+				start: 4700,
+				end: 4750,
 			},
 		],
 		defaultProperties: {
@@ -884,8 +895,8 @@ const script = [
 		},
 		audios: [],
 		texts: [
-			{ name: "scene1plan5-text", start: 3230, end: 3995 },
-			{ name: "scene1plan5-text-2", start: 4000, end: 4450 },
+			{ name: "scene1plan5-text", start: 3430, end: 4195 },
+			{ name: "scene1plan5-text-2", start: 4200, end: 4650 },
 		],
 		information: [],
 	},
@@ -893,8 +904,8 @@ const script = [
 	{
 		type: "plan",
 		name: "blackscreen-scene1plan5",
-		start: 5900,
-		end: 6050,
+		start: 6100,
+		end: 6250,
 		states: [],
 		defaultProperties: {
 			scale: 1,

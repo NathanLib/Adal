@@ -699,7 +699,13 @@ const script = [
 		},
 		audios: [],
 		texts: [],
-		information: [],
+		information: [
+			{
+				name: "scene1plan4-source",
+				start: 2450,
+				end: 3150,
+			},
+		],
 	},
 
 	{

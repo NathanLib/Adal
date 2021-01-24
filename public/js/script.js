@@ -615,10 +615,10 @@ const script = [
 		audios: [
 			{
 				name: "scene1plan3-voiceover.wav",
-				object: new Audio("public/sounds/scene1plan3-voiceover.wav"),
+				object: new Audio("public/sounds/scene1plan3-voiceover.m4a"),
 				loop: false,
 				start: 80,
-				end: 81,
+				end: 280,
 			},
 			{
 				name: "scene1plan3-voiceover-2.wav",

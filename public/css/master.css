@@ -458,7 +458,7 @@ p {
 ---------- */
 
 #start-help {
-	z-index: 10;
+	z-index: 12;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -695,7 +695,7 @@ p {
 /* Plan 1 */
 
 #scene1plan1-background {
-	z-index: 9;
+	z-index: 11;
 	position: fixed;
 	top: 0;
 	left: 0;

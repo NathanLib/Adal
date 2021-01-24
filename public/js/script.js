@@ -2,6 +2,7 @@
 var isAudioAllowed = false;
 var isAutoPlay = false;
 var isTextDisplayed = true;
+var isSourceAvailable = false;
 
 var wasAudio = false;
 var wasAutoPlay = false;
@@ -413,16 +414,21 @@ function render(posS) {
 			}
 		}
 
-		information: for (let m = 0; m < scene.information.length; m++) {
+		for (let m = 0; m < scene.information.length; m++) {
 			const info = scene.information[m];
 
 			if (posS >= info.start && posS <= info.end) {
 				$("#information").data("source", info.name);
 				$("#information").removeClass("d-none");
-				break information;
+				isSourceAvailable = true;
+				break;
 			} else {
-				$("#information").data("source", "");
-				$("#information").addClass("d-none");
+				if (!isSourceAvailable) {
+					$("#information").data("source", "");
+					$("#information").addClass("d-none");
+				}
+
+				isSourceAvailable = false;
 			}
 		}
 	}
@@ -490,8 +496,8 @@ const script = [
 		information: [
 			{
 				name: "scene1plan1-source",
-				start: 1,
-				end: 25,
+				start: 3,
+				end: 20,
 			},
 		],
 	},
@@ -507,7 +513,7 @@ const script = [
 				startValue: 0.5,
 				endValue: 1,
 				start: 0,
-				end: 10,
+				end: 20,
 			},
 			{
 				type: "translateX",
@@ -542,13 +548,7 @@ const script = [
 		information: [
 			{
 				name: "scene1plan2-source",
-				start: 28,
-				end: 45,
-			},
-
-			{
-				name: "scene1plan3-source",
-				start: 50,
+				start: 25,
 				end: 60,
 			},
 		],
@@ -625,13 +625,7 @@ const script = [
 			{ name: "scene1plan3-text-2", start: 280, end: 605 },
 			{ name: "scene1plan3-text-3", start: 610, end: 810 },
 		],
-		information: [
-			{
-				name: "scene1plan2-source",
-				start: 145,
-				end: 235,
-			},
-		],
+		information: [],
 	},
 
 	{
@@ -665,13 +659,7 @@ const script = [
 			{ name: "scene1plan4-text", start: 940, end: 1595 },
 			{ name: "scene1plan4-text-2", start: 1600, end: 2300 },
 		],
-		information: [
-			{
-				name: "scene1plan2-source",
-				start: 145,
-				end: 235,
-			},
-		],
+		information: [],
 	},
 
 	{
@@ -866,13 +854,7 @@ const script = [
 			{ name: "scene1plan5-text", start: 3230, end: 3995 },
 			{ name: "scene1plan5-text-2", start: 4000, end: 4450 },
 		],
-		information: [
-			{
-				name: "scene1plan2-source",
-				start: 145,
-				end: 235,
-			},
-		],
+		information: [],
 	},
 
 	{

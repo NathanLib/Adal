@@ -625,7 +625,13 @@ const script = [
 			{ name: "scene1plan3-text-2", start: 280, end: 605 },
 			{ name: "scene1plan3-text-3", start: 610, end: 810 },
 		],
-		information: [],
+		information: [
+			{
+				name: "scene1plan3-source",
+				start: 70,
+				end: 850,
+			},
+		],
 	},
 
 	{

@@ -78,8 +78,8 @@ $(window).on("load", function () {
 	$(window).scroll(function () {
 		scrollTop = $("html, body").scrollTop();
 
+		// NE FONCTIONNE PAS
 		if (scrollTop < position) {
-			console.log("on remooooonte !");
 			fetchSounds();
 		}
 		position = scrollTop;
@@ -342,6 +342,8 @@ function render(posS) {
 	$("#information").data("source", "");
 	$("#information").addClass("d-none");
 
+	fetchSounds();
+
 	for (let i = 0; i < script.length; i++) {
 		const scene = script[i];
 
@@ -544,7 +546,24 @@ const script = [
 			opacity: 0.5,
 			translateX: 0,
 		},
-		audios: [],
+		audios: [
+			{
+				name: "children",
+				object: new Audio("public/sounds/children.wav"),
+				loop: true,
+				alreadyPlayed: false,
+				start: 22,
+				end: 60,
+			},
+			{
+				name: "donkey",
+				object: new Audio("public/sounds/donkey.wav"),
+				loop: true,
+				alreadyPlayed: false,
+				start: 30,
+				end: 55,
+			},
+		],
 		texts: [],
 		information: [
 			{
@@ -611,7 +630,7 @@ const script = [
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 830,
+				start: 930,
 				end: 1050,
 			},
 		],
@@ -622,34 +641,34 @@ const script = [
 		},
 		audios: [
 			{
-				name: "scene1plan3-voiceover.wav",
-				object: new Audio("public/sounds/scene1plan3-voiceover.m4a"),
+				name: "scene1plan3-voiceover",
+				object: new Audio("public/sounds/scene1plan3-voiceover.wav"),
 				loop: false,
 				alreadyPlayed: false,
 				start: 80,
-				end: 260,
+				end: 200,
 			},
 			{
-				name: "scene1plan3-voiceover-2.wav",
+				name: "scene1plan3-voiceover-2",
 				object: new Audio("public/sounds/scene1plan3-voiceover-2.wav"),
 				loop: false,
 				alreadyPlayed: false,
-				start: 265,
-				end: 695,
+				start: 205,
+				end: 645,
 			},
 			{
-				name: "scene1plan3-voiceover-3.wav",
+				name: "scene1plan3-voiceover-3",
 				object: new Audio("public/sounds/scene1plan3-voiceover-3.wav"),
 				loop: false,
 				alreadyPlayed: false,
-				start: 700,
-				end: 1010,
+				start: 650,
+				end: 930,
 			},
 		],
 		texts: [
-			{ name: "scene1plan3-text", start: 80, end: 260 },
-			{ name: "scene1plan3-text-2", start: 265, end: 695 },
-			{ name: "scene1plan3-text-3", start: 700, end: 1010 },
+			{ name: "scene1plan3-text", start: 80, end: 200 },
+			{ name: "scene1plan3-text-2", start: 205, end: 645 },
+			{ name: "scene1plan3-text-3", start: 650, end: 930 },
 		],
 		information: [
 			{
@@ -664,7 +683,7 @@ const script = [
 		type: "adal",
 		name: "scene1plan4-adal",
 		start: 1120,
-		end: 2600,
+		end: 3900,
 		states: [
 			{
 				type: "opacity",
@@ -677,8 +696,8 @@ const script = [
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 2525,
-				end: 2600,
+				start: 3725,
+				end: 3900,
 			},
 		],
 		defaultProperties: {
@@ -686,10 +705,35 @@ const script = [
 			opacity: 0,
 			translateX: 0,
 		},
-		audios: [],
+		audios: [
+			{
+				name: "scene1plan4-voiceover",
+				object: new Audio("public/sounds/scene1plan4-voiceover.wav"),
+				loop: false,
+				alreadyPlayed: false,
+				start: 1140,
+				end: 1540,
+			},
+			{
+				name: "scene1plan4-voiceover-2",
+				object: new Audio("public/sounds/scene1plan4-voiceover-2.wav"),
+				loop: false,
+				alreadyPlayed: false,
+				start: 1545,
+				end: 2195,
+			},
+			{
+				name: "scene1plan4-voiceover-3",
+				object: new Audio("public/sounds/scene1plan4-voiceover-3.wav"),
+				loop: false,
+				alreadyPlayed: false,
+				start: 2200,
+				end: 3700,
+			},
+		],
 		texts: [
-			{ name: "scene1plan4-text", start: 1140, end: 1795 },
-			{ name: "scene1plan4-text-2", start: 1800, end: 2500 },
+			{ name: "scene1plan4-text", start: 1140, end: 2195 },
+			{ name: "scene1plan4-text-2", start: 2200, end: 3700 },
 		],
 		information: [],
 	},
@@ -698,7 +742,7 @@ const script = [
 		type: "plan",
 		name: "scene1plan4-background",
 		start: 1040,
-		end: 3400,
+		end: 4600,
 		states: [
 			{
 				type: "opacity",
@@ -712,16 +756,16 @@ const script = [
 				type: "scale",
 				startValue: 1,
 				endValue: 5,
-				start: 2700,
-				end: 3300,
+				start: 4000,
+				end: 4600,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 2700,
-				end: 3300,
+				start: 4000,
+				end: 4600,
 			},
 		],
 		defaultProperties: {
@@ -729,13 +773,22 @@ const script = [
 			opacity: 0,
 			translateX: 0,
 		},
-		audios: [],
+		audios: [
+			{
+				name: "market",
+				object: new Audio("public/sounds/market.wav"),
+				loop: true,
+				alreadyPlayed: false,
+				start: 3700,
+				end: 4600,
+			},
+		],
 		texts: [],
 		information: [
 			{
 				name: "scene1plan4-source",
-				start: 2550,
-				end: 3350,
+				start: 3750,
+				end: 4550,
 			},
 		],
 	},
@@ -744,7 +797,7 @@ const script = [
 		type: "characters",
 		name: "scene1plan4-char",
 		start: 1045,
-		end: 3400,
+		end: 4600,
 		states: [
 			{
 				type: "opacity",
@@ -758,16 +811,16 @@ const script = [
 				type: "scale",
 				startValue: 1,
 				endValue: 5,
-				start: 2700,
-				end: 3300,
+				start: 4000,
+				end: 4600,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 2700,
-				end: 3300,
+				start: 4000,
+				end: 4600,
 			},
 		],
 		defaultProperties: {
@@ -783,31 +836,31 @@ const script = [
 	{
 		type: "plan",
 		name: "scene1plan5-background",
-		start: 3250,
-		end: 6200,
+		start: 4600,
+		end: 7500,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 3250,
-				end: 3350,
+				start: 4600,
+				end: 4700,
 			},
 
 			{
 				type: "translateX",
 				startValue: 0,
 				endValue: 1,
-				start: 4800,
-				end: 6200,
+				start: 6100,
+				end: 7300,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 6100,
-				end: 6200,
+				start: 7400,
+				end: 7500,
 			},
 		],
 		defaultProperties: {
@@ -820,8 +873,8 @@ const script = [
 		information: [
 			{
 				name: "scene1plan5-source",
-				start: 3300,
-				end: 6150,
+				start: 4600,
+				end: 7450,
 			},
 		],
 	},
@@ -829,31 +882,31 @@ const script = [
 	{
 		type: "characters",
 		name: "scene1plan5-char",
-		start: 3250,
-		end: 6200,
+		start: 4600,
+		end: 7500,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 3250,
-				end: 3350,
+				start: 4600,
+				end: 4700,
 			},
 
 			{
 				type: "translateX",
 				startValue: 0,
 				endValue: 1,
-				start: 4800,
-				end: 6200,
+				start: 6100,
+				end: 7300,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 6100,
-				end: 6200,
+				start: 7400,
+				end: 7500,
 			},
 		],
 		defaultProperties: {
@@ -869,23 +922,23 @@ const script = [
 	{
 		type: "adal",
 		name: "scene1plan5-adal",
-		start: 3400,
-		end: 4750,
+		start: 4700,
+		end: 6250,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 3400,
-				end: 3420,
+				start: 4700,
+				end: 4720,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 4700,
-				end: 4750,
+				start: 6000,
+				end: 6250,
 			},
 		],
 		defaultProperties: {
@@ -895,8 +948,8 @@ const script = [
 		},
 		audios: [],
 		texts: [
-			{ name: "scene1plan5-text", start: 3430, end: 4195 },
-			{ name: "scene1plan5-text-2", start: 4200, end: 4650 },
+			{ name: "scene1plan5-text", start: 4730, end: 5495 },
+			{ name: "scene1plan5-text-2", start: 5500, end: 5950 },
 		],
 		information: [],
 	},
@@ -904,8 +957,8 @@ const script = [
 	{
 		type: "plan",
 		name: "blackscreen-scene1plan5",
-		start: 6100,
-		end: 6250,
+		start: 7400,
+		end: 7550,
 		states: [],
 		defaultProperties: {
 			scale: 1,

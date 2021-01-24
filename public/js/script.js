@@ -248,9 +248,8 @@ function closeSource() {
 function applyLoopAudios() {
 	script.forEach((element) => {
 		element.audios.forEach((audio) => {
-			audio.loop
-				? (audio.object.loop = true)
-				: (audio.object.loop = false);
+			console.log(audio.loop);
+			if (audio.loop) audio.object.loop = true;
 		});
 	});
 }
@@ -295,7 +294,7 @@ function applyProperties(name, properties) {
 function goToDestination(destination) {
 	switch (destination) {
 		case "pin-rissani":
-			rissani_posS = 2.5;
+			rissani_posS = 3.5;
 			scrollTo(rissani_posS);
 			break;
 		default:
@@ -613,10 +612,32 @@ const script = [
 			opacity: 0,
 			translateX: 0,
 		},
-		audios: [],
+		audios: [
+			{
+				name: "scene1plan3-voiceover.wav",
+				object: new Audio("public/sounds/scene1plan3-voiceover.wav"),
+				loop: false,
+				start: 80,
+				end: 81,
+			},
+			{
+				name: "scene1plan3-voiceover-2.wav",
+				object: new Audio("public/sounds/scene1plan3-voiceover-2.wav"),
+				loop: false,
+				start: 285,
+				end: 605,
+			},
+			{
+				name: "scene1plan3-voiceover-3.wav",
+				object: new Audio("public/sounds/scene1plan3-voiceover-3.wav"),
+				loop: false,
+				start: 610,
+				end: 810,
+			},
+		],
 		texts: [
 			{ name: "scene1plan3-text", start: 80, end: 280 },
-			{ name: "scene1plan3-text-2", start: 280, end: 605 },
+			{ name: "scene1plan3-text-2", start: 285, end: 605 },
 			{ name: "scene1plan3-text-3", start: 610, end: 810 },
 		],
 		information: [

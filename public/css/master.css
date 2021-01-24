@@ -592,6 +592,52 @@ p {
 }
 
 /* ----------
+-- STYLES POUR LES REMERCIEMENTS --
+---------- */
+
+.remerciements-wrap {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(10, 10, 10);
+	color: white;
+	text-align: center;
+	overflow: auto;
+	display: none;
+}
+
+.remerciements {
+	width: 40%;
+	margin: auto;
+	animation: scrollUp 24s linear 1s infinite;
+}
+
+@supports (transform: translate3d(0px, 0px, 0px)) {
+	.remerciements-wrap {
+		overflow: hidden;
+	}
+	.remerciements {
+		padding-top: 101vh;
+	}
+}
+
+@keyframes scrollUp {
+	from {
+		transform: translateY(0%);
+	}
+	to {
+		transform: translateY(-100%);
+	}
+}
+.remerciements:hover {
+	animation-play-state: paused;
+}
+
+/* ----------
 -- STYLES POUR LES PAGES SOURCES --
 ---------- */
 

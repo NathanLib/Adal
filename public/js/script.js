@@ -1043,14 +1043,6 @@ const script = [
 		end: 17800,
 		states: [
 			{
-				type: "opacity",
-				startValue: 0,
-				endValue: 1,
-				start: 9500,
-				end: 10000,
-			},
-
-			{
 				type: "translateX",
 				startValue: 0,
 				endValue: 1,
@@ -1068,7 +1060,7 @@ const script = [
 		],
 		defaultProperties: {
 			scale: 1,
-			opacity: 0,
+			opacity: 1,
 			translateX: 0,
 		},
 		audios: [],

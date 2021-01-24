@@ -289,7 +289,7 @@ p {
 ---------- */
 
 #scroller {
-	height: 30000px;
+	height: 150000px;
 }
 
 /* ----------
@@ -458,7 +458,7 @@ p {
 ---------- */
 
 #start-help {
-	z-index: 3;
+	z-index: 10;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -682,7 +682,7 @@ p {
 	font-family: "Open Sans";
 	font-size: 1.5rem;
 	text-align: center;
-	background-color: rgba(0, 0, 0, 0.25);
+	background-color: rgba(0, 0, 0, 0.5);
 	transform: translateX(-50%);
 	-webkit-transform: translateX(-50%);
 	-ms-transform: translateX(-50%);
@@ -695,7 +695,7 @@ p {
 /* Plan 1 */
 
 #scene1plan1-background {
-	z-index: 2;
+	z-index: 9;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -711,7 +711,7 @@ p {
 
 #scene1plan2-background {
 	opacity: 0.5;
-	z-index: 0;
+	z-index: 7;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -724,7 +724,7 @@ p {
 }
 
 #scene1plan2-char {
-	z-index: 1;
+	z-index: 8;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -736,7 +736,7 @@ p {
 /* Plan 3 */
 
 #scene1plan3-adal {
-	z-index: 1;
+	z-index: 8;
 	position: fixed;
 	top: 0;
 	left: 1rem;
@@ -747,7 +747,18 @@ p {
 
 /* Plan 4 */
 
+#scene1plan4-adal {
+	z-index: 10;
+	position: fixed;
+	top: 0;
+	left: 1rem;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+}
+
 #scene1plan4-background {
+	z-index: 8;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -760,7 +771,7 @@ p {
 }
 
 #scene1plan4-char {
-	z-index: 1;
+	z-index: 9;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -774,8 +785,18 @@ p {
 
 /* Plan 5 */
 
+#scene1plan5-adal {
+	z-index: 10;
+	position: fixed;
+	top: 0;
+	left: 1rem;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+}
+
 #scene1plan5-background {
-	z-index: 0;
+	z-index: 7;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -786,7 +807,7 @@ p {
 }
 
 #scene1plan5-char {
-	z-index: 1;
+	z-index: 7;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -797,8 +818,95 @@ p {
 
 /* Écran noir */
 
-#blackscreen {
-	z-index: -1;
+#blackscreen-scene1plan5 {
+	z-index: 6;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	-o-object-fit: cover;
+	object-fit: cover;
+}
+
+/* ----------
+-- STYLES POUR SCENE 2 --
+---------- */
+
+/* Plan 1 */
+
+#scene2plan1-background {
+	z-index: 5;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 100%;
+}
+
+/* Plan 2 */
+
+#scene2plan2-background {
+	z-index: 4;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+}
+
+#scene2plan2-char {
+	z-index: 4;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+}
+
+/* Plan 3 */
+
+#scene2plan3-background {
+	z-index: 3;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+}
+
+/* Plan 4 */
+
+#scene2plan4-background {
+	z-index: 2;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+}
+
+#scene2plan4-char {
+	z-index: 2;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: auto;
+	height: 100%;
+}
+
+/* Écran noir */
+
+#blackscreen-scene2plan4 {
+	z-index: 1;
 	position: fixed;
 	top: 0;
 	left: 0;

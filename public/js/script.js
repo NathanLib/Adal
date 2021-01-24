@@ -3,9 +3,12 @@ var isAudioAllowed = false;
 var isAutoPlay = false;
 var isTextDisplayed = true;
 
+var wasAudio = false;
+var wasAutoPlay = false;
+
 var delta = 0;
 var scrollTop = 0;
-var timeMax = 1440;
+var timeMax = 20000;
 var totalHeight = 0;
 
 $(window).on("load", function () {
@@ -184,7 +187,7 @@ function toggleAutoPlay() {
 
 function getDuration(target) {
 	var currentTop = $(window).scrollTop(),
-		rate = 6,
+		rate = 3,
 		distance;
 	distance = Math.abs(currentTop - target);
 	return distance * rate;
@@ -204,13 +207,13 @@ function displaySource() {
 	// Bloque le scroll si la page source est ouverte
 	$("body").addClass("no-scroll");
 
-	// Coupe le son et l'auto-play s'ils étaient autorisés
-	// !! IL FAUDRAIT ESSAYSER DE TROUVER UNE SOLUTION POUR SE SOUVENIR DE CE PARAMETRE
-	// ET LE REACTIVER OU NON A LA FERMETURE DE LA PAGE EN FONCTION
+	// Coupe le son et l'auto-play
 	if (isAudioAllowed) {
+		wasAudio = true;
 		toggleSound();
 	}
 	if (isAutoPlay) {
+		wasAutoPlay = true;
 		toggleAutoPlay();
 	}
 }
@@ -232,13 +235,13 @@ function closeSource() {
 	$("body").removeClass("no-scroll");
 
 	// Rétablie le son et l'auto-play
-	// !! IL FAUDRAIT ESSAYSER DE TROUVER UNE SOLUTION POUR SE SOUVENIR DE CE PARAMETRE
-	// ET LE REACTIVER OU NON A LA FERMETURE DE LA PAGE EN FONCTION
-	if (!isAudioAllowed) {
+	if (!isAudioAllowed && wasAudio) {
 		toggleSound();
+		wasAudio = false;
 	}
-	if (!isAutoPlay) {
+	if (!isAutoPlay && wasAutoPlay) {
 		toggleAutoPlay();
+		wasAutoPlay = false;
 	}
 }
 
@@ -301,6 +304,11 @@ function goToDestination(destination) {
 }
 
 function scrollTo(dest_posS) {
+	if (isAutoPlay && !wasAutoPlay) {
+		wasAutoPlay = true;
+		toggleAutoPlay();
+	}
+
 	dest_scroll = Math.ceil((dest_posS * totalHeight) / timeMax);
 	$("html, body").animate(
 		{
@@ -308,6 +316,11 @@ function scrollTo(dest_posS) {
 		},
 		2000
 	);
+
+	if (wasAutoPlay) {
+		wasAutoPlay = false;
+		toggleAutoPlay();
+	}
 }
 
 function render(posS) {
@@ -400,13 +413,13 @@ function render(posS) {
 			}
 		}
 
-		for (let m = 0; m < scene.information.length; m++) {
+		information: for (let m = 0; m < scene.information.length; m++) {
 			const info = scene.information[m];
 
 			if (posS >= info.start && posS <= info.end) {
 				$("#information").data("source", info.name);
 				$("#information").removeClass("d-none");
-				break;
+				break information;
 			} else {
 				$("#information").data("source", "");
 				$("#information").addClass("d-none");
@@ -426,14 +439,14 @@ const script = [
 		type: "help",
 		name: "start-help",
 		start: 0,
-		end: 2,
+		end: 3,
 		states: [
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
 				start: 0,
-				end: 2,
+				end: 3,
 			},
 		],
 		defaultProperties: {
@@ -443,7 +456,7 @@ const script = [
 		},
 		audios: [],
 		texts: [],
-		information: {},
+		information: [],
 	},
 
 	{
@@ -455,15 +468,15 @@ const script = [
 			{
 				type: "scale",
 				startValue: 1,
-				endValue: 7.5,
-				start: 2.5,
+				endValue: 4,
+				start: 10,
 				end: 35,
 			},
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 0,
+				start: 10,
 				end: 25,
 			},
 		],
@@ -474,14 +487,20 @@ const script = [
 		},
 		audios: [],
 		texts: [],
-		information: {},
+		information: [
+			{
+				name: "scene1plan1-source",
+				start: 1,
+				end: 25,
+			},
+		],
 	},
 
 	{
 		type: "plan",
 		name: "scene1plan2-background",
 		start: 0,
-		end: 350,
+		end: 890,
 		states: [
 			{
 				type: "opacity",
@@ -493,7 +512,7 @@ const script = [
 			{
 				type: "translateX",
 				startValue: 0,
-				endValue: 0.3,
+				endValue: 0.15,
 				start: 22,
 				end: 64,
 			},
@@ -501,8 +520,8 @@ const script = [
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 325,
-				end: 350,
+				start: 845,
+				end: 890,
 			},
 		],
 		defaultProperties: {
@@ -526,6 +545,7 @@ const script = [
 				start: 28,
 				end: 45,
 			},
+
 			{
 				name: "scene1plan3-source",
 				start: 50,
@@ -570,14 +590,14 @@ const script = [
 		},
 		audios: [],
 		texts: [],
-		information: {},
+		information: [],
 	},
 
 	{
 		type: "adal",
 		name: "scene1plan3-adal",
 		start: 65,
-		end: 320,
+		end: 870,
 		states: [
 			{
 				type: "opacity",
@@ -590,8 +610,8 @@ const script = [
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 300,
-				end: 320,
+				start: 830,
+				end: 850,
 			},
 		],
 		defaultProperties: {
@@ -601,41 +621,87 @@ const script = [
 		},
 		audios: [],
 		texts: [
-			{ name: "scene1plan3-text", start: 80, end: 140 },
-			{ name: "scene1plan3-text-2", start: 145, end: 235 },
-			{ name: "scene1plan3-text-3", start: 240, end: 300 },
+			{ name: "scene1plan3-text", start: 80, end: 280 },
+			{ name: "scene1plan3-text-2", start: 280, end: 605 },
+			{ name: "scene1plan3-text-3", start: 610, end: 810 },
 		],
-		information: {},
+		information: [
+			{
+				name: "scene1plan2-source",
+				start: 145,
+				end: 235,
+			},
+		],
 	},
 
 	{
-		type: "plan",
-		name: "scene1plan4-background",
-		start: 320,
-		end: 600,
+		type: "adal",
+		name: "scene1plan4-adal",
+		start: 920,
+		end: 2400,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 320,
-				end: 350,
+				start: 920,
+				end: 930,
+			},
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 2325,
+				end: 2400,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 0,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [
+			{ name: "scene1plan4-text", start: 940, end: 1595 },
+			{ name: "scene1plan4-text-2", start: 1600, end: 2300 },
+		],
+		information: [
+			{
+				name: "scene1plan2-source",
+				start: 145,
+				end: 235,
+			},
+		],
+	},
+
+	{
+		type: "plan",
+		name: "scene1plan4-background",
+		start: 840,
+		end: 3200,
+		states: [
+			{
+				type: "opacity",
+				startValue: 0,
+				endValue: 1,
+				start: 845,
+				end: 890,
 			},
 
 			{
 				type: "scale",
 				startValue: 1,
 				endValue: 5,
-				start: 420,
-				end: 620,
+				start: 2500,
+				end: 3100,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 420,
-				end: 580,
+				start: 2500,
+				end: 3100,
 			},
 		],
 		defaultProperties: {
@@ -651,31 +717,31 @@ const script = [
 	{
 		type: "characters",
 		name: "scene1plan4-char",
-		start: 320,
-		end: 540,
+		start: 845,
+		end: 3200,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 320,
-				end: 370,
+				start: 845,
+				end: 915,
 			},
 
 			{
 				type: "scale",
 				startValue: 1,
 				endValue: 5,
-				start: 420,
-				end: 620,
+				start: 2500,
+				end: 3100,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 420,
-				end: 540,
+				start: 2500,
+				end: 3100,
 			},
 		],
 		defaultProperties: {
@@ -685,37 +751,37 @@ const script = [
 		},
 		audios: [],
 		texts: [],
-		information: {},
+		information: [],
 	},
 
 	{
 		type: "plan",
 		name: "scene1plan5-background",
-		start: 590,
-		end: 920,
+		start: 3050,
+		end: 6000,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 590,
-				end: 650,
+				start: 3050,
+				end: 3150,
 			},
 
 			{
 				type: "translateX",
 				startValue: 0,
-				endValue: 0.75,
-				start: 670,
-				end: 920,
+				endValue: 1,
+				start: 4600,
+				end: 6000,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 900,
-				end: 920,
+				start: 5900,
+				end: 6000,
 			},
 		],
 		defaultProperties: {
@@ -731,31 +797,31 @@ const script = [
 	{
 		type: "characters",
 		name: "scene1plan5-char",
-		start: 590,
-		end: 920,
+		start: 3050,
+		end: 6000,
 		states: [
 			{
 				type: "opacity",
 				startValue: 0,
 				endValue: 1,
-				start: 620,
-				end: 680,
+				start: 3050,
+				end: 3150,
 			},
 
 			{
 				type: "translateX",
 				startValue: 0,
-				endValue: 0.75,
-				start: 670,
-				end: 920,
+				endValue: 1,
+				start: 4600,
+				end: 6000,
 			},
 
 			{
 				type: "opacity",
 				startValue: 1,
 				endValue: 0,
-				start: 900,
-				end: 920,
+				start: 5900,
+				end: 6000,
 			},
 		],
 		defaultProperties: {
@@ -765,14 +831,55 @@ const script = [
 		},
 		audios: [],
 		texts: [],
-		information: {},
+		information: [],
+	},
+
+	{
+		type: "adal",
+		name: "scene1plan5-adal",
+		start: 3200,
+		end: 4550,
+		states: [
+			{
+				type: "opacity",
+				startValue: 0,
+				endValue: 1,
+				start: 3200,
+				end: 3220,
+			},
+
+			{
+				type: "opacity",
+				startValue: 1,
+				endValue: 0,
+				start: 4500,
+				end: 4550,
+			},
+		],
+		defaultProperties: {
+			scale: 1,
+			opacity: 0,
+			translateX: 0,
+		},
+		audios: [],
+		texts: [
+			{ name: "scene1plan5-text", start: 3230, end: 3995 },
+			{ name: "scene1plan5-text-2", start: 4000, end: 4450 },
+		],
+		information: [
+			{
+				name: "scene1plan2-source",
+				start: 145,
+				end: 235,
+			},
+		],
 	},
 
 	{
 		type: "plan",
-		name: "blackscreen",
-		start: 900,
-		end: 940,
+		name: "blackscreen-scene1plan5",
+		start: 5900,
+		end: 6050,
 		states: [],
 		defaultProperties: {
 			scale: 1,
@@ -781,8 +888,224 @@ const script = [
 		},
 		audios: [],
 		texts: [],
-		information: {},
+		information: [],
 	},
+
+	// {
+	// 	type: "plan",
+	// 	name: "scene2plan1-background",
+	// 	start: 900,
+	// 	end: 1200,
+	// 	states: [
+	// 		{
+	// 			type: "opacity",
+	// 			startValue: 1,
+	// 			endValue: 0,
+	// 			start: 1000,
+	// 			end: 1200,
+	// 		},
+	// 	],
+	// 	defaultProperties: {
+	// 		scale: 1,
+	// 		opacity: 1,
+	// 		translateX: 0,
+	// 	},
+	// 	audios: [],
+	// 	texts: [],
+	// 	information: [],
+	// },
+
+	// {
+	// 	type: "plan",
+	// 	name: "scene2plan2-background",
+	// 	start: 900,
+	// 	end: 2850,
+	// 	states: [
+	// 		{
+	// 			type: "opacity",
+	// 			startValue: 0,
+	// 			endValue: 1,
+	// 			start: 1000,
+	// 			end: 1200,
+	// 		},
+
+	// 		{
+	// 			type: "translateX",
+	// 			startValue: 0,
+	// 			endValue: 1,
+	// 			start: 1200,
+	// 			end: 2850,
+	// 		},
+
+	// 		{
+	// 			type: "opacity",
+	// 			startValue: 1,
+	// 			endValue: 0,
+	// 			start: 1400,
+	// 			end: 1750,
+	// 		},
+	// 	],
+	// 	defaultProperties: {
+	// 		scale: 1,
+	// 		opacity: 0,
+	// 		translateX: 0,
+	// 	},
+	// 	audios: [],
+	// 	texts: [],
+	// 	information: [],
+	// },
+
+	// {
+	// 	type: "characters",
+	// 	name: "scene2plan2-char",
+	// 	start: 900,
+	// 	end: 2300,
+	// 	states: [
+	// 		{
+	// 			type: "opacity",
+	// 			startValue: 0,
+	// 			endValue: 1,
+	// 			start: 1100,
+	// 			end: 1250,
+	// 		},
+
+	// 		{
+	// 			type: "translateX",
+	// 			startValue: 0,
+	// 			endValue: 1.5,
+	// 			start: 1200,
+	// 			end: 2200,
+	// 		},
+
+	// 		{
+	// 			type: "opacity",
+	// 			startValue: 1,
+	// 			endValue: 0,
+	// 			start: 1400,
+	// 			end: 2200,
+	// 		},
+	// 	],
+	// 	defaultProperties: {
+	// 		scale: 1,
+	// 		opacity: 0,
+	// 		translateX: 0,
+	// 	},
+	// 	audios: [],
+	// 	texts: [],
+	// 	information: [],
+	// },
+
+	// {
+	// 	type: "plan",
+	// 	name: "scene2plan3-background",
+	// 	start: 900,
+	// 	end: 2850,
+	// 	states: [
+	// 		{
+	// 			type: "translateX",
+	// 			startValue: 0,
+	// 			endValue: 1,
+	// 			start: 1200,
+	// 			end: 2850,
+	// 		},
+
+	// 		{
+	// 			type: "opacity",
+	// 			startValue: 1,
+	// 			endValue: 0,
+	// 			start: 1950,
+	// 			end: 2300,
+	// 		},
+	// 	],
+	// 	defaultProperties: {
+	// 		scale: 1,
+	// 		opacity: 1,
+	// 		translateX: 0,
+	// 	},
+	// 	audios: [],
+	// 	texts: [],
+	// 	information: [],
+	// },
+
+	// {
+	// 	type: "plan",
+	// 	name: "scene2plan4-background",
+	// 	start: 900,
+	// 	end: 2850,
+	// 	states: [
+	// 		{
+	// 			type: "translateX",
+	// 			startValue: 0,
+	// 			endValue: 1,
+	// 			start: 1200,
+	// 			end: 2850,
+	// 		},
+
+	// 		{
+	// 			type: "opacity",
+	// 			startValue: 1,
+	// 			endValue: 0,
+	// 			start: 2500,
+	// 			end: 2850,
+	// 		},
+	// 	],
+	// 	defaultProperties: {
+	// 		scale: 1,
+	// 		opacity: 1,
+	// 		translateX: 0,
+	// 	},
+	// 	audios: [],
+	// 	texts: [],
+	// 	information: [],
+	// },
+
+	// {
+	// 	type: "plan",
+	// 	name: "scene2plan4-char",
+	// 	start: 2100,
+	// 	end: 2850,
+	// 	states: [
+	// 		{
+	// 			type: "translateX",
+	// 			startValue: 2,
+	// 			endValue: -2,
+	// 			start: 1900,
+	// 			end: 2850,
+	// 		},
+
+	// 		{
+	// 			type: "opacity",
+	// 			startValue: 1,
+	// 			endValue: 0,
+	// 			start: 2300,
+	// 			end: 2700,
+	// 		},
+	// 	],
+	// 	defaultProperties: {
+	// 		scale: 1,
+	// 		opacity: 1,
+	// 		translateX: 3,
+	// 	},
+	// 	audios: [],
+	// 	texts: [],
+	// 	information: [],
+	// },
+
+	// {
+	// 	type: "plan",
+	// 	name: "blackscreen-scene2plan4",
+	// 	start: 2500,
+	// 	end: 2900,
+	// 	states: [],
+	// 	defaultProperties: {
+	// 		scale: 1,
+	// 		opacity: 1,
+	// 		translateX: 0,
+	// 	},
+	// 	audios: [],
+	// 	texts: [],
+	// 	information: [],
+	// },
 ];
 
 // Créer une fonction ease-in pour le render

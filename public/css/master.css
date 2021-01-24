@@ -609,6 +609,16 @@ p {
 	backdrop-filter: blur(5px);
 }
 
+.source hr {
+	width: 75%;
+	margin: 3rem auto;
+	color: white;
+}
+
+.source-number {
+	color: white;
+}
+
 .source-content {
 	max-width: 1200px;
 }
@@ -631,14 +641,14 @@ p {
 	padding-left: 2rem;
 }
 
-.source-content .info-details {
-	color: lightgray;
-}
-
 .source-content hr {
 	width: 25%;
 	margin: 3rem auto;
-	color: white;
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.source-content .info-details {
+	color: lightgray;
 }
 
 .source-content .biography {

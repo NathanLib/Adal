@@ -328,6 +328,10 @@ function render(posS) {
 	for (let i = 0; i < script.length; i++) {
 		const scene = script[i];
 
+		// Reset du bouton information
+		$("#information").data("source", "");
+		$("#information").addClass("d-none");
+
 		if (posS >= scene.start && posS <= scene.end) {
 			$("#" + scene.name).show();
 
@@ -420,15 +424,6 @@ function render(posS) {
 			if (posS >= info.start && posS <= info.end) {
 				$("#information").data("source", info.name);
 				$("#information").removeClass("d-none");
-				isSourceAvailable = true;
-				break;
-			} else {
-				if (!isSourceAvailable) {
-					$("#information").data("source", "");
-					$("#information").addClass("d-none");
-				}
-
-				isSourceAvailable = false;
 			}
 		}
 	}
@@ -785,7 +780,13 @@ const script = [
 		},
 		audios: [],
 		texts: [],
-		information: [],
+		information: [
+			{
+				name: "scene1plan5-source",
+				start: 3100,
+				end: 5950,
+			},
+		],
 	},
 
 	{
